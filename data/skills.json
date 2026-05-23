@@ -12,12 +12,19 @@
       "title": "How LLMs Work",
       "summary": "Tokens, context windows, temperature, and the transformer in plain English. The mental model everything else builds on.",
       "whyItMatters": "Every conversation you'll have as an AI SPOC starts here. If you can't explain what a token is, you'll get rolled by vendors who say 'context window' to mean three different things.",
+      "firstStep": "Open the Anthropic console or OpenAI playground and send the same prompt three times at temperature 0, 0.7, and 1.5. Note what changes — that single experiment is half the intuition.",
       "prerequisites": [],
       "xp": 50,
       "evidenceCriteria": [
         "Can explain attention to a non-technical colleague in 5 minutes",
         "Can describe what a token is and why context windows matter",
         "Built a toy chat app that calls an API directly"
+      ],
+      "keyConcepts": ["token", "context window", "temperature", "attention", "next-token prediction"],
+      "commonPitfalls": [
+        "Confusing tokens with words — they're not the same and the difference matters for cost",
+        "Assuming the model 'knows' something when it's actually pattern-matching from training data",
+        "Treating temperature 0 as 'always correct' — it's just 'most likely', which can still be wrong"
       ],
       "resources": [
         { "label": "3Blue1Brown — But what is a GPT?", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M" },
@@ -32,11 +39,18 @@
       "title": "Prompt Engineering Fundamentals",
       "summary": "System vs user messages, role priming, instructions vs examples, why specificity wins.",
       "whyItMatters": "This is the skill people will most often see you demonstrate. A SPOC who writes sharp prompts becomes the person everyone forwards their tricky AI questions to.",
+      "firstStep": "Pick one prompt you already use and rewrite it three times. Get to the point where you can predict the output before you press send.",
       "prerequisites": ["llm-basics"],
       "xp": 50,
       "evidenceCriteria": [
-        "Wrote 5 prompts that produce reliably structured output",
-        "Can articulate why one prompt outperforms another with evidence"
+        "Wrote 5 prompts that each produce reliably structured output across 10+ test inputs",
+        "Can articulate why one prompt outperforms another with specific evidence, not vibes"
+      ],
+      "keyConcepts": ["system prompt", "few-shot examples", "role priming", "instruction following", "structured output"],
+      "commonPitfalls": [
+        "Stuffing too many instructions into one prompt — the model loses focus on what matters",
+        "Using vague verbs like 'analyze' or 'help with' instead of specific ones like 'extract' or 'classify'",
+        "Not specifying output format up front, then being surprised the output is messy"
       ],
       "resources": [
         { "label": "Anthropic — Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" },
@@ -50,15 +64,22 @@
       "title": "Embeddings & Vector Search",
       "summary": "What an embedding is, why cosine similarity matters, how vector DBs power semantic search.",
       "whyItMatters": "Embeddings unlock the most common real business use case for LLMs at work: searching your own knowledge. Once this clicks, you'll spot RAG opportunities everywhere.",
+      "firstStep": "Embed 10 of your own documents (notes, emails, anything) via the OpenAI or Voyage embeddings API. Find the most similar pair via cosine in pure numpy. No library needed.",
       "prerequisites": ["llm-basics"],
       "xp": 60,
       "evidenceCriteria": [
-        "Built a semantic search over a personal document set",
-        "Can explain when embeddings beat keyword search and when they don't"
+        "Built a semantic search over a personal document set of 100+ items",
+        "Can explain in 2 minutes when embeddings beat keyword search and when they don't"
+      ],
+      "keyConcepts": ["vector embedding", "cosine similarity", "vector database", "semantic search", "hybrid search"],
+      "commonPitfalls": [
+        "Treating embedding similarity as semantic equivalence — synonyms don't always cluster",
+        "Picking a vector DB before knowing your scale — premature infrastructure choice",
+        "Forgetting embedding models are also task-specific — code embeddings aren't the same as prose embeddings"
       ],
       "resources": [
         { "label": "Simon Willison — Embeddings: What they are and why they matter", "url": "https://simonwillison.net/2023/Oct/23/embeddings/" },
-        { "label": "Vicki Boykis — What are embeddings? (PDF book, free)" },
+        { "label": "Vicki Boykis — What are embeddings? (free PDF book)" },
         { "label": "OpenAI Cookbook — Embeddings recipes" }
       ]
     },
@@ -68,11 +89,19 @@
       "title": "Evaluation & Hallucination",
       "summary": "How to tell if an LLM output is actually good. Eval sets, golden answers, why 'looks right' isn't right.",
       "whyItMatters": "The difference between 'we tried AI and it didn't work' and 'we shipped AI that pays for itself' is almost always evaluation. Without it you're guessing in front of stakeholders.",
+      "firstStep": "Take 10 outputs from an LLM workflow you used this week. Grade each honestly. What fraction were actually correct? That number is your baseline.",
       "prerequisites": ["prompt-fundamentals"],
       "xp": 60,
       "evidenceCriteria": [
-        "Built an eval set of 20+ prompts for a real task",
-        "Can name three categories of hallucination and how to detect each"
+        "Built an eval set of 20+ representative inputs with expected outputs for a real task",
+        "Can name three categories of hallucination and give one detection strategy for each",
+        "Caught at least one wrong output that 'looked right' in a real workflow"
+      ],
+      "keyConcepts": ["eval set", "golden answer", "hallucination", "confabulation", "LLM-as-judge"],
+      "commonPitfalls": [
+        "Relying on vibes ('looks good') instead of a fixed eval set you re-run after every change",
+        "Using the same model to grade itself without controls — it inherits its own biases",
+        "Optimizing only for cases you can easily measure and ignoring the hard ones"
       ],
       "resources": [
         { "label": "Hamel Husain — Your AI product needs evals", "url": "https://hamel.dev/blog/posts/evals/" },
@@ -86,16 +115,23 @@
       "title": "Cost, Latency & Tradeoffs",
       "summary": "Tokens cost money and time. Streaming, caching, batching, model size tradeoffs.",
       "whyItMatters": "Most failed AI projects die from sticker shock at scale, not from bad results. Owning this conversation early is what turns a SPOC into a trusted advisor.",
+      "firstStep": "Pick one prompt you use regularly. Log the input/output token counts and per-call cost for a week. Compare actuals to what you'd have guessed before measuring.",
       "prerequisites": ["llm-basics"],
       "xp": 40,
       "evidenceCriteria": [
-        "Can ballpark the per-call cost of a given prompt + model",
-        "Reduced cost or latency of a real call by 50%+ with evidence"
+        "Can ballpark the per-call cost of a given prompt + model within 25% before running it",
+        "Reduced cost or latency of a real call by 50%+ with documented before/after numbers"
+      ],
+      "keyConcepts": ["input vs output token pricing", "context caching", "streaming", "batching", "prompt compression"],
+      "commonPitfalls": [
+        "Quoting model 'price' without distinguishing input from output token rates",
+        "Optimizing for p50 latency and being surprised when p99 makes the product unusable",
+        "Underestimating how repeated context multiplies cost across many calls"
       ],
       "resources": [
         { "label": "Anthropic — Prompt caching", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" },
         { "label": "OpenAI — Latency optimization guide" },
-        { "label": "Pricing pages — keep a comparison sheet of Claude / GPT / Gemini / open models" }
+        { "label": "Keep a comparison sheet of Claude / GPT / Gemini / open-model pricing" }
       ]
     },
     {
@@ -104,11 +140,18 @@
       "title": "Ethics, Privacy & Data Handling",
       "summary": "PII in prompts, data retention by provider, copyright grey zones, bias risks.",
       "whyItMatters": "Legal and security teams will be your first hard gate at any real workplace. Knowing the answers before they ask the questions is how you earn 'AI SPOC' as a title rather than a nickname.",
+      "firstStep": "Open your AI provider's data-retention page right now. Write down — in your own words — what they retain, for how long, and who can access it.",
       "prerequisites": [],
       "xp": 50,
       "evidenceCriteria": [
-        "Can list which provider retains data and for how long",
-        "Drafted a one-page 'safe AI usage' guide for a team"
+        "Can recite the data-retention terms for the three AI vendors most used at your org, without checking notes",
+        "Drafted a one-page 'safe AI usage' guide for a team and got at least one colleague to actually follow it"
+      ],
+      "keyConcepts": ["PII", "data retention", "Zero Data Retention (ZDR)", "training opt-out", "data residency"],
+      "commonPitfalls": [
+        "Assuming 'enterprise tier' automatically means data isn't used for training — read the contract",
+        "Forgetting copyright implications when feeding company IP into a third-party model",
+        "Treating bias as a one-time checklist instead of an ongoing measurement"
       ],
       "resources": [
         { "label": "NIST AI Risk Management Framework" },
@@ -122,17 +165,24 @@
       "title": "The AI Landscape",
       "summary": "Frontier labs (Anthropic, OpenAI, Google, Meta, xAI), open-weight models, the inference-provider layer, and where it's all heading.",
       "whyItMatters": "You can't recommend tools you don't know exist. Staying current is half the job — and the half people most expect a SPOC to handle.",
+      "firstStep": "Open the LMSYS / Chatbot Arena leaderboard. Look at this week's top 5 models. Write a one-line take on what's notably different from last month.",
       "prerequisites": [],
       "xp": 30,
       "evidenceCriteria": [
-        "Can name top 3 frontier models and their differentiators",
-        "Tracks 2+ AI newsletters / sources weekly"
+        "Can describe two specific model releases or capability shifts from the past 30 days and what they unlock",
+        "Can name the top 3 frontier models and explain when you'd choose each over the others"
+      ],
+      "keyConcepts": ["frontier lab", "open-weight model", "inference provider", "model card", "API vs studio"],
+      "commonPitfalls": [
+        "Equating 'most expensive' with 'best for your use case' — often wrong",
+        "Tracking benchmark numbers without understanding what the benchmark actually measures",
+        "Falling behind on the 6-month rhythm — the field shifts faster than typical 'stay current' habits"
       ],
       "resources": [
-        { "label": "Simon Willison's blog (weekly LLM notes)", "url": "https://simonwillison.net" },
-        { "label": "Latent Space (podcast + newsletter)" },
+        { "label": "Simon Willison's blog — weekly LLM notes", "url": "https://simonwillison.net" },
+        { "label": "Latent Space — podcast + newsletter" },
         { "label": "The Pragmatic Engineer — AI deep dives" },
-        { "label": "lmsys.org Chatbot Arena leaderboard" }
+        { "label": "LMSYS Chatbot Arena leaderboard" }
       ]
     },
     {
@@ -141,12 +191,19 @@
       "title": "Hands-On: Build a Personal Assistant",
       "summary": "Capstone for Tier 1. A working LLM-powered tool you actually use day to day.",
       "whyItMatters": "There is no substitute for shipping. The first time you actually rely on something you built, every concept in this tier collapses into intuition.",
+      "firstStep": "Pick the one annoying task you do every week that an LLM could partly automate. Write a one-page spec for the assistant before any code touches the keyboard.",
       "prerequisites": ["prompt-fundamentals", "cost-latency", "ai-ethics-privacy"],
       "xp": 100,
       "evidenceCriteria": [
-        "A running app (CLI or web) that you use weekly",
-        "Code committed to a repo with a README",
-        "Wrote a short post-mortem: what worked, what didn't"
+        "A running app (CLI or web) you've used weekly for at least 2 weeks straight",
+        "Code committed to a public or private repo with a README",
+        "Wrote a short post-mortem: what worked, what didn't, what you'd change"
+      ],
+      "keyConcepts": ["API key management", "system prompt design", "conversation state", "error handling", "iteration loop"],
+      "commonPitfalls": [
+        "Over-scoping — building 'a personal assistant' instead of 'a tool that does X every Tuesday'",
+        "Skipping the post-mortem because shipping felt good enough",
+        "Calling it done before you've actually used it for two weeks"
       ],
       "resources": [
         { "label": "Anthropic API quickstart", "url": "https://docs.anthropic.com/en/api/getting-started" },
@@ -160,11 +217,18 @@
       "title": "Advanced Prompting Patterns",
       "summary": "Chain-of-thought, few-shot, structured output (JSON mode), self-critique, prompt chaining.",
       "whyItMatters": "Basic prompts solve toy problems. Advanced patterns are how you take a flaky demo to something you'd put in front of a customer or executive.",
+      "firstStep": "Take one prompt you've struggled with. Rewrite it three ways — chain-of-thought, few-shot, structured-output — and evaluate all three on the same five test cases.",
       "prerequisites": ["prompt-fundamentals"],
       "xp": 70,
       "evidenceCriteria": [
-        "Used 3+ advanced patterns to solve real problems",
-        "Can explain when chain-of-thought helps vs hurts"
+        "Used 3+ advanced patterns to solve real problems with measured improvement over a basic prompt",
+        "Can explain in 60 seconds when chain-of-thought helps vs hurts"
+      ],
+      "keyConcepts": ["chain-of-thought (CoT)", "few-shot prompting", "JSON mode / structured output", "self-critique", "prompt chaining"],
+      "commonPitfalls": [
+        "Using CoT for tasks that don't need it — slower and more expensive for no gain",
+        "Few-shot examples that accidentally bias the model toward one answer",
+        "Chaining prompts aggressively when one well-designed prompt would do"
       ],
       "resources": [
         { "label": "Anthropic — Prompt engineering techniques (full chapter)" },
@@ -178,11 +242,18 @@
       "title": "RAG Patterns",
       "summary": "Retrieval-augmented generation: chunking strategies, hybrid search, reranking, context stuffing limits.",
       "whyItMatters": "Most '90% of useful business value' AI projects are RAG in some form. If you can run a real RAG iteration end-to-end you'll never run out of work.",
+      "firstStep": "Index one folder of documents you actually use — notes, drive, repo. Build the minimum search loop. Measure if retrieval is even good before tuning anything else.",
       "prerequisites": ["embeddings-vectors", "advanced-prompting"],
       "xp": 90,
       "evidenceCriteria": [
-        "Shipped a RAG app over a non-trivial corpus",
-        "Iterated on chunk size + retrieval strategy with measured impact"
+        "Shipped a RAG app over a non-trivial corpus (1000+ chunks) with a documented eval set",
+        "Iterated on chunk size + retrieval strategy with measured impact (not vibes)"
+      ],
+      "keyConcepts": ["chunking strategy", "embedding model choice", "hybrid (BM25 + vector) search", "reranking", "context window budget"],
+      "commonPitfalls": [
+        "Tuning the LLM prompt before fixing bad retrieval — fix the inputs first",
+        "Defaulting to small chunks and tiny top-k because that's what the tutorial used",
+        "Skipping reranking — it's often the highest-leverage improvement"
       ],
       "resources": [
         { "label": "Anthropic — Contextual retrieval", "url": "https://www.anthropic.com/news/contextual-retrieval" },
@@ -196,11 +267,18 @@
       "title": "Agents & Tool Use",
       "summary": "Function calling, tool loops, multi-step agents, when an agent is overkill vs essential.",
       "whyItMatters": "Agents are the 2025–2026 hype cycle. Knowing which problems actually need one — and which don't — is the difference between a costly demo and a useful product.",
+      "firstStep": "Pick a 3-step workflow you do manually (search → process → file). Build it as a tool-calling agent. Compare it head-to-head against a non-agent script.",
       "prerequisites": ["advanced-prompting"],
       "xp": 90,
       "evidenceCriteria": [
-        "Built an agent that uses at least 3 tools to complete a task end-to-end",
-        "Can articulate the 'agent vs workflow' tradeoff"
+        "Built an agent that uses at least 3 tools to complete a real task end-to-end",
+        "Can articulate the 'agent vs workflow' tradeoff with a specific recent example"
+      ],
+      "keyConcepts": ["function calling", "tool schema", "agent loop", "ReAct pattern", "least-privilege tool execution"],
+      "commonPitfalls": [
+        "Building an agent when a deterministic workflow would do — cheaper, faster, more reliable",
+        "Letting an agent loop without spend caps or step limits — they will run forever and bill",
+        "Not validating tool outputs before passing back to the model — garbage in, garbage out"
       ],
       "resources": [
         { "label": "Anthropic — Building effective agents", "url": "https://www.anthropic.com/research/building-effective-agents" },
@@ -214,11 +292,18 @@
       "title": "Fine-Tuning vs Prompting",
       "summary": "When fine-tuning is worth it, when it's a trap. LoRA, distillation, evals as the deciding factor.",
       "whyItMatters": "Vendors will push fine-tuning because it locks you in. Knowing when it's actually the right call (rarely) and when it isn't (usually) protects your org from expensive mistakes.",
+      "firstStep": "Pick one prompt you'd want to fine-tune. Write down what you'd need: data volume, labels, eval set, expected lift over good prompting. Can't fill all four? You're not ready.",
       "prerequisites": ["eval-hallucination", "advanced-prompting"],
       "xp": 70,
       "evidenceCriteria": [
-        "Ran one fine-tuning experiment OR convincingly argued why not to",
-        "Can give the decision framework in under 5 minutes"
+        "Ran one fine-tuning experiment with documented before/after evals, OR convincingly argued why not to with the same rigor",
+        "Can give your decision framework in under 5 minutes with concrete numbers"
+      ],
+      "keyConcepts": ["LoRA / PEFT", "supervised fine-tuning", "distillation", "training data quality", "catastrophic forgetting"],
+      "commonPitfalls": [
+        "Reaching for fine-tuning when prompt engineering hasn't been exhausted",
+        "Underestimating data-cleaning effort — easily 80% of the work",
+        "Locking into a specific model version that gets deprecated mid-project"
       ],
       "resources": [
         { "label": "Hamel Husain — Fine-tuning is not all you need" },
@@ -232,11 +317,18 @@
       "title": "Choosing Models for Tasks",
       "summary": "Big-model-for-hard-problem vs small-model-for-volume. Capability tiers, latency budgets, fallback chains.",
       "whyItMatters": "Most teams default to GPT-4-class for everything and burn budget. A SPOC who can match model to task is worth their salary in saved spend.",
+      "firstStep": "Pick three real prompts you use today. Run each across three model tiers (small / mid / frontier). Pick the cheapest one that still hits your quality bar.",
       "prerequisites": ["cost-latency", "ai-landscape"],
       "xp": 60,
       "evidenceCriteria": [
-        "Documented a model-selection rubric used on a real project",
-        "Mixed 2+ models in a single product flow"
+        "Documented a model-selection rubric used on a real project, with the cost/quality tradeoff explicit",
+        "Mixed 2+ models in a single product flow with reasoning for each choice"
+      ],
+      "keyConcepts": ["capability tier", "latency budget", "fallback chain", "model routing", "structured eval"],
+      "commonPitfalls": [
+        "Picking by leaderboard rather than task-specific eval",
+        "Forgetting that 'free' open models still have hosting/latency costs",
+        "Hard-coding one model into the codebase — making future migration painful"
       ],
       "resources": [
         { "label": "Artificial Analysis — model benchmarks + price/perf", "url": "https://artificialanalysis.ai" },
@@ -249,11 +341,18 @@
       "title": "Running Local Models",
       "summary": "Ollama, llama.cpp, quantization, when local beats cloud (privacy, cost, latency, offline).",
       "whyItMatters": "Some workloads can never leave the building. Knowing the local ecosystem is what lets you say 'yes' to legal/security when others have to say 'no'.",
+      "firstStep": "Install Ollama. Pull a 7B model. Ask it the same question you'd ask Claude. Note three things that are worse, and one thing that's actually fine.",
       "prerequisites": ["llm-basics"],
       "xp": 50,
       "evidenceCriteria": [
-        "Ran a 7B+ model locally and used it for a real task",
-        "Can articulate when local is the right call"
+        "Ran a 7B+ model locally and used it for at least one real task (not just a test prompt)",
+        "Can articulate in 2 minutes when local is the right call vs cloud"
+      ],
+      "keyConcepts": ["quantization (GGUF, AWQ)", "VRAM requirements", "context length tradeoff", "inference engines (llama.cpp, vLLM, Ollama)", "model licensing"],
+      "commonPitfalls": [
+        "Comparing local-quantized models to frontier APIs and concluding 'local doesn't work' — apples to oranges",
+        "Ignoring hardware constraints — VRAM math kills more projects than capability",
+        "Choosing model licenses you can't actually deploy under commercially"
       ],
       "resources": [
         { "label": "Ollama — get started", "url": "https://ollama.com" },
@@ -267,11 +366,18 @@
       "title": "Prompt Versioning & Testing",
       "summary": "Prompts are code. Version them, diff them, test them on regression sets before shipping.",
       "whyItMatters": "Every team eventually hits 'why did the chatbot get worse?'. Teams with versioned, tested prompts know in an hour. Teams without find out from customers.",
+      "firstStep": "Put your most-used prompt in a git repo. Add a CHANGELOG.md noting why each version changed. That's the minimum viable version control for prompts.",
       "prerequisites": ["advanced-prompting", "eval-hallucination"],
       "xp": 60,
       "evidenceCriteria": [
-        "Set up a prompt-test pipeline (manual or automated) for one product",
-        "Caught a regression before users did"
+        "Set up a prompt-test pipeline (manual or automated) for one product, with regression evals re-run on every change",
+        "Caught one regression before users did and can point to the eval that caught it"
+      ],
+      "keyConcepts": ["regression set", "A/B prompt testing", "prompt schema", "promptfoo / langfuse", "deployment gating"],
+      "commonPitfalls": [
+        "Treating prompts as config strings instead of code under version control",
+        "Running 'evals' only on the examples you tuned with — no regression signal",
+        "Shipping a prompt change without versioning the eval results alongside it"
       ],
       "resources": [
         { "label": "Promptfoo — open-source prompt testing", "url": "https://promptfoo.dev" },
@@ -284,11 +390,18 @@
       "title": "Observability & Logging",
       "summary": "Trace every LLM call. Tools (Langfuse, Helicone, custom). What to log, what to redact.",
       "whyItMatters": "You cannot fix what you cannot see. The day a user reports a hallucination from last Tuesday, observability is what saves your weekend.",
+      "firstStep": "Add structured logging to one production LLM call: input, output, model, latency, cost, request_id. That single change is the baseline everyone skips.",
       "prerequisites": ["eval-hallucination"],
       "xp": 60,
       "evidenceCriteria": [
-        "Instrumented one app so you can debug a bad output a week later",
-        "Built one dashboard tracking cost, latency, quality"
+        "Instrumented one app so you can debug a specific bad output a week later from logs alone",
+        "Built one dashboard tracking cost, latency, and quality together — not separately"
+      ],
+      "keyConcepts": ["trace", "span", "redaction", "p50/p95/p99 latency", "cost attribution"],
+      "commonPitfalls": [
+        "Logging the raw prompt with PII — instant compliance problem",
+        "Logging every field you can think of — bloat without query payoff",
+        "No way to correlate a user complaint back to the specific failing call"
       ],
       "resources": [
         { "label": "Langfuse — open-source LLM observability", "url": "https://langfuse.com" },
@@ -302,11 +415,18 @@
       "title": "Safety Guardrails",
       "summary": "Prompt injection, output filtering, jailbreak resistance, sensitive-topic handling.",
       "whyItMatters": "The first time your AI says something embarrassing on a customer call is a career-defining moment. Guardrails are how you avoid it.",
+      "firstStep": "Take your live AI app. Try to inject a malicious instruction via the user input field. Document what happens. Fix the most obvious vector before the end of the week.",
       "prerequisites": ["ai-ethics-privacy", "advanced-prompting"],
       "xp": 70,
       "evidenceCriteria": [
-        "Red-teamed your own app and patched 3+ findings",
-        "Can list the top 5 prompt-injection vectors"
+        "Red-teamed your own app for at least 1 hour and patched 3+ findings",
+        "Can list the top 5 prompt-injection vectors with mitigations for each"
+      ],
+      "keyConcepts": ["prompt injection", "jailbreak", "indirect injection", "output filtering", "least-privilege tool use"],
+      "commonPitfalls": [
+        "Filtering keywords instead of intent — trivially bypassed",
+        "Trusting LLM-as-judge to detect adversarial prompts when it's vulnerable to the same attacks",
+        "Skipping guardrails because 'nobody would try that' — they will, and soon"
       ],
       "resources": [
         { "label": "OWASP LLM Top 10", "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/" },
@@ -320,14 +440,23 @@
       "title": "Hands-On: Ship an Internal AI Tool",
       "summary": "Capstone for Tier 2. A real tool deployed at work, used by at least one team that isn't yours.",
       "whyItMatters": "This is the credibility-flipping moment. Before: 'Greg is into AI'. After: 'Greg built the thing the sales team uses every day'. That's the foundation for everything in Tier 3.",
+      "firstStep": "Name the team that will use this. Talk to one person on it for 30 minutes about their actual workflow. Don't write a line of code before that conversation.",
       "prerequisites": ["rag-patterns", "agents-tools", "observability-logging"],
       "xp": 200,
       "evidenceCriteria": [
-        "Tool is in production with real users",
-        "Measured impact (hours saved, errors reduced, NPS)",
-        "Wrote a launch retro shared with stakeholders"
+        "Tool is in production with real users (not yours) for at least 30 days",
+        "Measured impact (hours saved, errors reduced, NPS) with before/after baselines",
+        "Wrote a launch retro shared with stakeholders and at least one critical lesson documented"
       ],
-      "resources": []
+      "keyConcepts": ["MVP scope", "user onboarding", "support burden", "deployment", "post-launch metrics"],
+      "commonPitfalls": [
+        "Building for an imagined user instead of a specific team you've talked to first",
+        "Shipping without instrumentation — you'll lose the credibility story",
+        "Treating launch as the end instead of the start of a 3-month measurement period"
+      ],
+      "resources": [
+        { "label": "Marty Cagan — Inspired (product discovery patterns)" }
+      ]
     },
 
     {
@@ -336,12 +465,19 @@
       "title": "Identifying High-Value Use Cases",
       "summary": "Where AI actually moves the needle. The 'expensive human judgment that repeats' lens. Killing bad ideas fast.",
       "whyItMatters": "Most AI projects fail at idea-selection, not at execution. A SPOC who can confidently say 'no, that one won't work' becomes the gatekeeper everyone wants.",
+      "firstStep": "List 10 places in your org where humans spend hours on repetitive judgment work. Don't filter yet. Just list. The act of listing is the discovery.",
       "prerequisites": ["hands-on-internal-tool"],
       "xp": 80,
       "evidenceCriteria": [
-        "Generated 10+ candidate use cases for your org",
-        "Killed 7+ of them with reasoning before any code was written",
-        "Got one prioritized into a real backlog"
+        "Generated 10+ candidate use cases for your org with brief written rationale",
+        "Killed 7+ of them with documented reasoning before any code was written",
+        "Got one prioritized into a real product or operations backlog"
+      ],
+      "keyConcepts": ["expensive human judgment", "high-volume / low-stakes", "data availability", "user receptivity", "kill criteria"],
+      "commonPitfalls": [
+        "Picking 'cool' use cases over 'boring high-leverage' ones",
+        "Skipping data-readiness — building toward something you don't have inputs for",
+        "Not killing fast enough — sunk cost on bad ideas burns months"
       ],
       "resources": [
         { "label": "a16z — Emerging Architectures for LLM Applications" },
@@ -355,11 +491,19 @@
       "title": "Running an AI Discovery Workshop",
       "summary": "Facilitating a session that surfaces real pain + real opportunity in 90 minutes. Templates, exercises, follow-ups.",
       "whyItMatters": "Workshops are how you scale yourself. One good workshop generates more aligned use cases than three months of 1:1s.",
+      "firstStep": "Read one structured workshop guide (Continuous Discovery Habits chapter, or a Design Sprint summary). Book a 60-min session with 4 stakeholders for next week.",
       "prerequisites": ["identifying-use-cases"],
       "xp": 90,
       "evidenceCriteria": [
-        "Ran one workshop with 5+ stakeholders",
-        "Walked out with a prioritized opportunity list and exec sign-off"
+        "Ran one workshop with 5+ stakeholders, with a written agenda and timed sections",
+        "Walked out with a prioritized opportunity list and at least one exec sponsor committed",
+        "Followed up within 1 week so momentum didn't die"
+      ],
+      "keyConcepts": ["assumption mapping", "opportunity-solution tree", "stakeholder map", "evidence ladder", "convergence vs divergence"],
+      "commonPitfalls": [
+        "Letting the most senior person dominate the room — actively manage airtime",
+        "Walking out without a follow-up commitment from each attendee",
+        "Treating it as a one-shot — momentum dies without a second session"
       ],
       "resources": [
         { "label": "Teresa Torres — Continuous Discovery Habits (book)" },
@@ -372,11 +516,18 @@
       "title": "Change Management for AI Adoption",
       "summary": "People don't fear AI; they fear losing relevance. Communication, training, opt-in vs mandate, dealing with skeptics.",
       "whyItMatters": "The hardest part of AI at work is never the technology. A SPOC who can move skeptics — without bulldozing them — becomes indispensable.",
+      "firstStep": "Identify one teammate who's actively skeptical of AI. Schedule coffee with them. Listen for 30 minutes before saying a word.",
       "prerequisites": ["discovery-workshop"],
       "xp": 80,
       "evidenceCriteria": [
-        "Brought one resistant team to active adoption",
-        "Documented the playbook you used"
+        "Brought one resistant team to active adoption that's still using AI 60+ days after the initial push",
+        "Documented the playbook you used in a form a peer could re-run"
+      ],
+      "keyConcepts": ["resistance vs apathy", "intrinsic motivation", "early adopter / laggard", "psychological safety", "loss aversion"],
+      "commonPitfalls": [
+        "Mistaking 'they don't get it' for 'they have a legitimate concern you haven't heard'",
+        "Mandating from the top — produces malicious compliance, not adoption",
+        "Forgetting that the people you most need to convince aren't in the all-hands"
       ],
       "resources": [
         { "label": "John Kotter — Leading Change (8-step model)" },
@@ -390,14 +541,22 @@
       "title": "Vendor vs Build Evaluation",
       "summary": "When to buy (most of the time), when to build (rare, but real). RFP rubrics for AI vendors, hidden lock-in risks.",
       "whyItMatters": "Vendors are racing to lock orgs into platforms before buyers know what they need. A SPOC with a real rubric saves their company from multi-year regret.",
+      "firstStep": "Pick one AI vendor your org is evaluating. Draft a 5-question scorecard (data handling, lock-in, pricing, model agility, support). Score it honestly today.",
       "prerequisites": ["model-selection", "finetune-vs-prompt"],
       "xp": 70,
       "evidenceCriteria": [
-        "Ran a real vendor-vs-build decision with documented reasoning",
-        "Negotiated one AI vendor contract"
+        "Ran a real vendor-vs-build decision with documented reasoning that a non-technical exec agreed with",
+        "Negotiated at least one AI vendor contract — knew which terms mattered before signing"
+      ],
+      "keyConcepts": ["build / buy / partner", "TCO (total cost of ownership)", "vendor lock-in", "data egress", "SLA"],
+      "commonPitfalls": [
+        "Falling for impressive demos with cherry-picked data",
+        "Underestimating integration burden — usually 3x the obvious estimate",
+        "Signing multi-year deals before validating production performance"
       ],
       "resources": [
-        { "label": "Martin Casado / a16z — Build vs buy in the AI stack" }
+        { "label": "Martin Casado / a16z — Build vs buy in the AI stack" },
+        { "label": "Gartner AI vendor scoring frameworks (publicly available summaries)" }
       ]
     },
     {
@@ -406,15 +565,22 @@
       "title": "Data Readiness Assessment",
       "summary": "AI is only as good as the data. Auditing what you have, what's missing, what's compliant, what's poisoned.",
       "whyItMatters": "Half the AI projects you'll be asked to scope can't actually be built — the data isn't there. Spotting that in week one rather than month six is a senior-level skill.",
+      "firstStep": "Pick one proposed AI use case at your org. Make a one-page audit: where's the data, who owns it, how clean is it, what's missing, what's restricted. Do this today.",
       "prerequisites": ["rag-patterns", "ai-ethics-privacy"],
       "xp": 80,
       "evidenceCriteria": [
-        "Produced a data-readiness scorecard for one domain",
-        "Closed 2+ data gaps that unblocked a use case"
+        "Produced a written data-readiness scorecard for one domain, scored honestly",
+        "Closed 2+ data gaps that unblocked a previously-stuck use case"
+      ],
+      "keyConcepts": ["data lineage", "data classification", "PII inventory", "ground truth labels", "data drift"],
+      "commonPitfalls": [
+        "Assuming data exists because someone said 'we have a CRM'",
+        "Ignoring data labels — unlabeled data is far less useful than people think",
+        "Mistaking 'we have data' for 'we have data you're allowed to use'"
       ],
       "resources": [
         { "label": "DAMA-DMBOK — Data Management Body of Knowledge" },
-        { "label": "Monte Carlo / Data Reliability Engineering blog" }
+        { "label": "Monte Carlo — Data Reliability Engineering blog" }
       ]
     },
     {
@@ -423,15 +589,23 @@
       "title": "Upskilling Teammates",
       "summary": "Lunch-and-learns, prompt libraries, pair-prompting, internal champions. Building org-wide capability.",
       "whyItMatters": "Your real leverage isn't what you ship — it's the 50 people you teach to ship without you. This is how a SPOC becomes a CTO.",
+      "firstStep": "Run one 30-minute lunch session this week. One topic, one demo, one Q&A. Don't try to teach everything — earn the second session.",
       "prerequisites": ["advanced-prompting", "change-management"],
       "xp": 80,
       "evidenceCriteria": [
         "Ran 3+ sessions with 10+ attendees each",
-        "Created a self-serve resource hub used after you stop pushing it",
-        "Identified and grew 2+ internal champions"
+        "Created a self-serve resource hub that's still being used 30+ days after you stopped actively promoting it",
+        "Identified and grew 2+ internal champions who can now run sessions themselves"
+      ],
+      "keyConcepts": ["champion / multiplier", "prompt library", "community of practice", "internal certification", "office hours"],
+      "commonPitfalls": [
+        "Lecturing instead of pair-prompting — people learn by doing, not watching",
+        "Over-investing in polished slide decks vs hands-on time",
+        "Skipping the follow-up — one-shot training doesn't stick"
       ],
       "resources": [
-        { "label": "Anthropic — Prompt library (steal patterns for your own)" }
+        { "label": "Anthropic — Prompt library (steal patterns for your own)" },
+        { "label": "Ethan Mollick — One useful thing (substack on practical AI teaching)" }
       ]
     },
     {
@@ -440,11 +614,18 @@
       "title": "Pilot → Production Playbook",
       "summary": "Killing the demo-that-never-ships pattern. Acceptance criteria, ownership, rollback plans, sunset triggers.",
       "whyItMatters": "AI is famous for impressive pilots that never become products. A documented production playbook is how you become the rare org that actually ships.",
+      "firstStep": "For one current pilot, write down: who's the production owner, what's the rollback plan, what would trigger sunset. If any of three is empty, that pilot isn't ready.",
       "prerequisites": ["hands-on-internal-tool", "observability-logging"],
       "xp": 100,
       "evidenceCriteria": [
-        "Took one AI pilot to production with documented playbook",
-        "Killed one that didn't deserve to ship"
+        "Took one AI pilot to production with a documented playbook another team could reuse",
+        "Killed at least one pilot that didn't deserve to ship, with the kill reasoning documented"
+      ],
+      "keyConcepts": ["acceptance criteria", "feature flags", "canary release", "rollback plan", "sunset trigger"],
+      "commonPitfalls": [
+        "Demo-driven development — impressive showcase that nobody actually uses",
+        "No owner — pilot orphaned the day you move to the next project",
+        "No sunset trigger — bad AI features live forever because nobody wants to kill them"
       ],
       "resources": [
         { "label": "Google — MLOps maturity model" },
@@ -457,11 +638,18 @@
       "title": "Measuring AI ROI",
       "summary": "Beyond 'feels useful'. Time saved, errors avoided, deflection rate, revenue lift. Honest before/after.",
       "whyItMatters": "Vague AI wins get cut in the next budget round. Numbered ones get funded again. A SPOC who measures honestly survives downturns.",
+      "firstStep": "Pick one shipped AI thing in your org. Get the most skeptical person to define what 'success' means for it. Then go measure exactly that.",
       "prerequisites": ["identifying-use-cases"],
       "xp": 80,
       "evidenceCriteria": [
-        "Published one ROI case study with real numbers",
-        "Defended it under skeptical questioning"
+        "Published one ROI case study with real numbers and a documented baseline",
+        "Defended the case study under skeptical exec questioning and the numbers held"
+      ],
+      "keyConcepts": ["counterfactual", "baseline (pre-AI) measurement", "deflection rate", "time-saved estimation", "Goodhart's law"],
+      "commonPitfalls": [
+        "Cherry-picking the best week as the ROI story",
+        "Confusing 'usage' with 'value' — people might be clicking without benefiting",
+        "Skipping the baseline — without before-data, there's no after-story"
       ],
       "resources": [
         { "label": "McKinsey — The economic potential of generative AI" },
@@ -474,11 +662,18 @@
       "title": "Policy & Governance",
       "summary": "Acceptable-use policy, approval workflows, data classification, vendor review, regulator-readiness.",
       "whyItMatters": "Every org needs an AI policy, almost none have a good one. Drafting the first credible version puts you in the room for every AI decision after.",
+      "firstStep": "Read your org's current AI policy (if one exists). Write down the three biggest gaps. If no policy exists, write the one-page MVP version this week.",
       "prerequisites": ["safety-guardrails", "ai-ethics-privacy"],
       "xp": 90,
       "evidenceCriteria": [
-        "Drafted or substantially improved an org-wide AI policy",
-        "Got it adopted by legal/security/leadership"
+        "Drafted or substantially improved an org-wide AI policy, with at least one section that survived legal review",
+        "Policy is adopted in practice (not just written) — can name 2+ recent decisions that referenced it"
+      ],
+      "keyConcepts": ["acceptable use policy", "data classification tier", "human-in-the-loop requirement", "model approval workflow", "incident reporting"],
+      "commonPitfalls": [
+        "Copy-pasting policies from other companies without adapting to actual workflows",
+        "Writing policy that nobody can comply with — gets ignored",
+        "No enforcement mechanism — policy without process is wishful thinking"
       ],
       "resources": [
         { "label": "NIST AI Risk Management Framework (AI RMF)" },
@@ -492,14 +687,23 @@
       "title": "Hands-On: Lead a Team's AI Adoption",
       "summary": "Capstone for Tier 3. Pick a team, take them from zero to capable, document everything.",
       "whyItMatters": "Before this capstone you're 'an AI person'. After it you're 'the person who made another team better at AI'. That second story is the one that gets you the CTO seat.",
+      "firstStep": "Pick the team. Just one. Get their explicit consent to be the case study. Set a 12-week measurable goal with them — written down, signed off.",
       "prerequisites": ["change-management", "pilot-to-production", "measuring-roi"],
       "xp": 300,
       "evidenceCriteria": [
-        "A team is meaningfully more productive with AI because of your work",
-        "ROI documented and shared",
-        "Adoption sustains 3+ months after you step back"
+        "A team is meaningfully more productive with AI because of your work, with documented before/after",
+        "ROI documented and shared with leadership in writing",
+        "Adoption sustains 3+ months after you actively step back"
       ],
-      "resources": []
+      "keyConcepts": ["change agent", "leading indicator", "adoption curve", "sustainability test", "case study narrative"],
+      "commonPitfalls": [
+        "Spreading thin across multiple teams — depth beats breadth at this stage",
+        "Forgetting to document — your future credibility lives in this artifact",
+        "Pulling back too fast — adoption needs you longer than you'd hope"
+      ],
+      "resources": [
+        { "label": "BCG / Deloitte — AI adoption case studies (use as templates)" }
+      ]
     },
 
     {
@@ -508,11 +712,18 @@
       "title": "AI Strategy & Roadmap",
       "summary": "Where AI fits in the 1, 3, 5-year vision. Differentiation vs hygiene. Bets, not initiatives.",
       "whyItMatters": "Strategy is what separates a CTO from a senior IC. Writing one that survives executive critique is the artifact you'll hand to your next hiring panel.",
+      "firstStep": "Sketch a one-page strategy in markdown: where's AI a differentiator vs hygiene for your company, what 3 bets you're making, what you're explicitly NOT doing.",
       "prerequisites": ["hands-on-team-adoption"],
       "xp": 150,
       "evidenceCriteria": [
-        "Authored an AI strategy doc that survived exec critique",
-        "Translated it into a quarterly roadmap with owners"
+        "Authored an AI strategy doc that survived exec critique without being watered down",
+        "Translated it into a quarterly roadmap with owners and measurable milestones"
+      ],
+      "keyConcepts": ["differentiation vs hygiene", "bet portfolio", "horizon planning (H1/H2/H3)", "explicit non-goals", "strategic narrative"],
+      "commonPitfalls": [
+        "Confusing a roadmap (when) with a strategy (why)",
+        "Trying to do everything — strategy is about what you say no to",
+        "Writing 'strategy' that's just buzzwords with no actual choice in it"
       ],
       "resources": [
         { "label": "Richard Rumelt — Good Strategy / Bad Strategy (book)" },
@@ -525,11 +736,18 @@
       "title": "Org Design for AI",
       "summary": "Centralized AI team vs embedded vs platform-plus-embedded. Hiring profiles. Where the model lives in the org chart.",
       "whyItMatters": "Org design is one of the few decisions that's expensive to undo. Getting it 70% right early beats getting it 100% right two years late.",
+      "firstStep": "Map the current AI work across your org. Who's doing what? Where are the overlaps and gaps? Don't change anything yet — just see the picture clearly.",
       "prerequisites": ["upskilling-team", "hands-on-team-adoption"],
       "xp": 120,
       "evidenceCriteria": [
-        "Proposed an org structure with rationale to leadership",
-        "Made one structural change that improved AI velocity"
+        "Proposed an org structure with explicit rationale and at least one alternative considered",
+        "Made one structural change that demonstrably improved AI velocity"
+      ],
+      "keyConcepts": ["center of excellence vs embedded", "platform team", "spoke/hub model", "RACI", "team API"],
+      "commonPitfalls": [
+        "Reorganizing before understanding what works in the current structure",
+        "Centralizing all AI work and creating a bottleneck",
+        "Embedding all AI work and losing leverage / standards"
       ],
       "resources": [
         { "label": "Team Topologies — Skelton & Pais (book)" },
@@ -542,13 +760,22 @@
       "title": "Build / Buy / Partner at Scale",
       "summary": "Same question as Tier 3 but with capex, multi-year contracts, and strategic partnerships in play.",
       "whyItMatters": "At the CTO level these decisions have 8-figure consequences. Defending them under board scrutiny is the new test.",
+      "firstStep": "Take one in-flight AI decision in your org. Write the 1-page build/buy/partner memo with explicit reasoning for the chosen path. Make it defensible.",
       "prerequisites": ["vendor-vs-build", "ai-strategy-roadmap"],
       "xp": 120,
       "evidenceCriteria": [
-        "Owned one strategic AI partnership decision",
-        "Defended a 'build' or 'buy' call to the board with evidence"
+        "Owned one strategic AI partnership decision with documented criteria",
+        "Defended a build/buy/partner call to the board with quantified reasoning"
       ],
-      "resources": []
+      "keyConcepts": ["strategic moat", "core vs context", "switching cost", "vendor leverage", "joint roadmap"],
+      "commonPitfalls": [
+        "Building for ego when buying is faster and equivalent",
+        "Buying for speed without considering long-term lock-in",
+        "Partnering without alignment on success criteria"
+      ],
+      "resources": [
+        { "label": "Geoffrey Moore — Core vs Context framework" }
+      ]
     },
     {
       "id": "platform-thinking",
@@ -556,11 +783,18 @@
       "title": "AI Platform Thinking",
       "summary": "Shared infra so every team doesn't rebuild the wheel: model registry, eval harness, prompt library, observability, gateways.",
       "whyItMatters": "Platforms are how an AI CTO converts one good engineer's work into ten teams' velocity. Without a platform you ceiling out.",
+      "firstStep": "List the 3 most common things AI teams in your org keep rebuilding (eval harness, observability, prompt library). Pick the one with most leverage and prototype the shared version.",
       "prerequisites": ["pilot-to-production", "observability-logging"],
       "xp": 150,
       "evidenceCriteria": [
         "Stood up one shared AI platform capability used by 3+ teams",
-        "Measured platform leverage (time-to-launch reduction)"
+        "Measured platform leverage — concrete time-to-launch reduction or cost saved"
+      ],
+      "keyConcepts": ["platform leverage", "internal developer platform", "self-service vs managed", "platform team as product team", "developer experience"],
+      "commonPitfalls": [
+        "Building a platform nobody asked for — solve real shared pain first",
+        "Treating the platform team as a service team without product ownership",
+        "Premature standardization — locking in patterns before they're proven"
       ],
       "resources": [
         { "label": "Team Topologies — Platform team patterns" },
@@ -573,11 +807,18 @@
       "title": "Risk & Compliance Leadership",
       "summary": "Owning AI risk at the exec level. EU AI Act, SOC2 mappings, model audit trails, board reporting.",
       "whyItMatters": "Regulators are racing to catch up. A CTO who can talk fluently to audit and legal is the rare bridge between innovation and not getting fined.",
+      "firstStep": "Read the EU AI Act risk-tier summary. Identify which tier each of your AI products falls into — even if you're not in the EU, the framework structures the conversation.",
       "prerequisites": ["policy-governance"],
       "xp": 130,
       "evidenceCriteria": [
         "Passed an external audit or assessment of AI controls",
-        "Briefed board or audit committee on AI risk posture"
+        "Briefed board or audit committee on AI risk posture with quantified exposure"
+      ],
+      "keyConcepts": ["risk tier (EU AI Act)", "model audit trail", "third-party assessment", "incident response plan", "regulator-readiness"],
+      "commonPitfalls": [
+        "Treating compliance as paperwork instead of as a design constraint",
+        "Hoping you can retrofit governance late — much more expensive than building it in",
+        "Underestimating regulator scrutiny on consumer-facing AI"
       ],
       "resources": [
         { "label": "ISO/IEC 42001 — AI management systems standard" },
@@ -590,14 +831,22 @@
       "title": "AI Budgeting & Spend",
       "summary": "Forecasting token spend at scale, capacity planning, chargeback models, the 'AI is free until it isn't' trap.",
       "whyItMatters": "AI spend can balloon 10x in a quarter without warning. The CTO who saw it coming earns trust for the next decade of decisions.",
+      "firstStep": "Pull the last 90 days of AI API spend. Plot it. Forecast the next 90 days at three growth assumptions (1x, 2x, 5x usage). The exercise itself surfaces the risks.",
       "prerequisites": ["measuring-roi", "build-buy-partner"],
       "xp": 110,
       "evidenceCriteria": [
-        "Owned an AI budget line with quarterly forecasts",
-        "Came in within 10% two quarters running"
+        "Owned an AI budget line with quarterly forecasts you presented to finance",
+        "Came in within 10% of forecast two quarters in a row"
+      ],
+      "keyConcepts": ["unit economics", "chargeback", "cost attribution", "burn rate", "commitment discount"],
+      "commonPitfalls": [
+        "Forecasting linearly when usage is exponential",
+        "Not negotiating committed-spend discounts once you're at scale",
+        "No internal chargeback — teams treat AI as free and overspend"
       ],
       "resources": [
-        { "label": "FinOps Foundation — emerging GenAI cost guidance" }
+        { "label": "FinOps Foundation — emerging GenAI cost guidance" },
+        { "label": "a16z — The economics of GPU compute" }
       ]
     },
     {
@@ -606,11 +855,18 @@
       "title": "Board-Level Communication",
       "summary": "Explaining AI to non-technical leaders. Risk + opportunity narrative. Saying 'I don't know' productively.",
       "whyItMatters": "The board never needs more jargon. They need confidence that someone in the room actually understands what's happening. That someone should be you.",
+      "firstStep": "Draft a 6-page Amazon-style narrative on your current AI position. Read it out loud. Cut anything that isn't a clear claim or a clear ask.",
       "prerequisites": ["ai-strategy-roadmap"],
       "xp": 110,
       "evidenceCriteria": [
-        "Delivered 2+ board updates on AI with clear asks",
-        "Changed a board decision with your input"
+        "Delivered 2+ board updates on AI with clear asks (not just status)",
+        "Documented one board decision that changed because of input you brought"
+      ],
+      "keyConcepts": ["narrative memo (Amazon 6-pager)", "ask, not update", "leading vs lagging indicator", "risk register", "strategic intent"],
+      "commonPitfalls": [
+        "Overloading the board with technical detail they can't use",
+        "Asking for budget without naming the specific decision the board needs to make",
+        "Not preparing for the hostile question — you will get one"
       ],
       "resources": [
         { "label": "Amazon — Writing 6-page narratives (template + examples)" },
@@ -622,15 +878,23 @@
       "tier": "cto",
       "title": "Talent Acquisition & Retention",
       "summary": "Who you actually need (ML engineers vs prompt engineers vs product), how to attract them, how to keep them.",
-      "whyItMatters": "AI talent shopping is brutal in 2025–2026. A CTO who can hire and keep great people is more valuable than one who can ship anything themselves.",
+      "whyItMatters": "Bad AI hires can set you back a year; great ones compound your strategy. The CTO who can read the difference in 45 minutes is the one who builds an AI capability rather than a string of failed pilots.",
+      "firstStep": "Write the job description for the next AI hire you actually need. Be specific about what they'll do in week 1, month 3, and year 1. Vague JDs attract vague people.",
       "prerequisites": ["org-design"],
       "xp": 110,
       "evidenceCriteria": [
-        "Hired or grew 2+ AI roles",
-        "Retention story: kept a key AI person you were at risk of losing"
+        "Hired or grew 2+ AI roles with documented criteria for what made them successful",
+        "Retention story: kept a key AI person you were at real risk of losing — and you can describe what worked"
+      ],
+      "keyConcepts": ["T-shaped skill profile", "build vs hire", "compensation philosophy", "onboarding ramp", "retention risk"],
+      "commonPitfalls": [
+        "Copying job descriptions from other companies — vague hires result",
+        "Underpaying for 'AI' titles when the market is brutally competitive",
+        "Hiring 'an AI person' without clear scope — they'll leave within 12 months"
       ],
       "resources": [
-        { "label": "Lenny's Newsletter — AI hiring frameworks" }
+        { "label": "Lenny's Newsletter — AI hiring frameworks" },
+        { "label": "Levels.fyi — calibrate compensation expectations" }
       ]
     },
     {
@@ -639,13 +903,22 @@
       "title": "Cross-Functional Alignment",
       "summary": "Legal, security, product, sales, marketing all have stakes in AI. Running the room.",
       "whyItMatters": "Most AI projects die at the seams between functions. The leader who can run those seams becomes the one everyone trusts to call the shot.",
+      "firstStep": "Identify one stalled AI initiative. Map the stakeholders by function. Find the unspoken disagreement that's actually keeping it stalled — that's the real work.",
       "prerequisites": ["change-management", "ai-strategy-roadmap"],
       "xp": 100,
       "evidenceCriteria": [
-        "Led one initiative that required active buy-in from 4+ functions",
-        "Resolved a hard cross-functional conflict over AI direction"
+        "Led one initiative requiring active buy-in from 4+ functions, with all of them on the record supporting",
+        "Resolved one hard cross-functional conflict over AI direction without it escalating to the CEO"
       ],
-      "resources": []
+      "keyConcepts": ["stakeholder mapping", "DACI / RACI", "alignment artifact", "escalation path", "joint commitment"],
+      "commonPitfalls": [
+        "Mistaking silence for agreement — silence usually means hidden objection",
+        "Pushing forward without legal/security sign-off — they'll catch you later, worse",
+        "Forgetting product/sales perspective — engineering can't ship adoption alone"
+      ],
+      "resources": [
+        { "label": "Patrick Lencioni — The Five Dysfunctions of a Team (book)" }
+      ]
     },
     {
       "id": "hands-on-company-strategy",
@@ -653,14 +926,23 @@
       "title": "Hands-On: Company-Wide AI Strategy",
       "summary": "Final capstone. A written strategy adopted by your org (or one you've consulted for) — the artifact you'd put in front of a CTO-search hiring panel.",
       "whyItMatters": "This is the trophy that closes the loop. From AI-curious to authored-and-shipped-strategy in one document. The story this artifact tells is the one that opens the next door.",
+      "firstStep": "Block out a half-day next week. Write the first draft. Don't aim for great — aim for written. Then iterate with one trusted advisor before showing anyone else.",
       "prerequisites": ["ai-strategy-roadmap", "ai-budgeting", "board-communication", "platform-thinking"],
       "xp": 500,
       "evidenceCriteria": [
         "Written strategy adopted at the executive level",
-        "Funded with budget and owners",
-        "Delivered first milestone on schedule"
+        "Funded with explicit budget and named owners",
+        "Delivered first milestone on schedule, with measurable outcomes shared back"
       ],
-      "resources": []
+      "keyConcepts": ["strategic narrative", "annual operating plan (AOP)", "exec review", "OKRs", "portfolio of bets"],
+      "commonPitfalls": [
+        "Polishing forever and never showing it",
+        "Writing 'safe' strategy that says nothing",
+        "Skipping the milestone delivery — strategy without execution is just talk"
+      ],
+      "resources": [
+        { "label": "Roger Martin — Playing to Win (strategy framework)" }
+      ]
     }
   ]
 }
