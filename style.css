@@ -414,8 +414,18 @@ input, textarea { font-family: inherit; }
   gap: 10px;
   font-size: 13px;
 }
-.evidence-body { flex: 1; word-break: break-word; }
+.evidence-body { flex: 1; word-break: break-word; line-height: 1.55; }
 .evidence-body a { color: var(--accent); }
+.evidence-body code {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: var(--mono);
+}
+.evidence-body strong { color: var(--text); }
+.evidence-body em { color: var(--text); font-style: italic; }
 .evidence-meta { color: var(--text-dim); font-size: 11px; white-space: nowrap; }
 .evidence-del {
   background: transparent;

@@ -1,3 +1,5 @@
+import { renderMarkdown } from "./markdown.js";
+
 export function createNodePanel({ root, skills, store, computeStatus, onChange, showPrompt }) {
   let currentNodeId = null;
 
@@ -139,16 +141,8 @@ export function createNodePanel({ root, skills, store, computeStatus, onChange, 
       li.className = "evidence-item";
       const body = document.createElement("div");
       body.className = "evidence-body";
-      if (isURL(entry.body)) {
-        const a = document.createElement("a");
-        a.href = entry.body;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.textContent = entry.body;
-        body.appendChild(a);
-      } else {
-        body.textContent = entry.body;
-      }
+      // renderMarkdown escapes input first, so this is safe even with hostile text
+      body.innerHTML = renderMarkdown(entry.body);
       const meta = document.createElement("span");
       meta.className = "evidence-meta";
       meta.textContent = new Date(entry.createdAt).toLocaleDateString();
@@ -173,7 +167,7 @@ export function createNodePanel({ root, skills, store, computeStatus, onChange, 
       const input = document.createElement("input");
       input.className = "evidence-input";
       input.type = "text";
-      input.placeholder = "Add a note or link…";
+      input.placeholder = "Note, link, or **markdown**…";
       const addBtn = document.createElement("button");
       addBtn.type = "submit";
       addBtn.className = "btn primary";
