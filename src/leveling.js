@@ -1,11 +1,8 @@
-// XP curve: level N requires N * 100 cumulative XP at the simplest tier,
-// growing slightly. Tuned so the 4 tiers feel like ~10 levels each.
-//   Level 1: 0–100
-//   Level 2: 100–250
-//   Level 3: 250–450
-//   Level N: requires N * (N+1) / 2 * 100 cumulative XP
+// XP curve, tuned so the 4 tiers feel like ~10 levels of progress.
+// Level N requires ((N-1) * N / 2) * 100 cumulative XP — you start at level 1
+// with 0 XP, hit level 2 at 100, level 3 at 300, level 4 at 600, etc.
 export function xpRequiredForLevel(level) {
-  return ((level * (level + 1)) / 2) * 100;
+  return (((level - 1) * level) / 2) * 100;
 }
 
 export function levelFromXP(xp) {
