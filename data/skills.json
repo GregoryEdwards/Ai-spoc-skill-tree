@@ -1,9 +1,9 @@
 {
   "tiers": [
-    { "id": "foundations",  "name": "AI Foundations",  "subtitle": "Understanding", "order": 1 },
-    { "id": "practitioner", "name": "AI Practitioner", "subtitle": "Using",         "order": 2 },
-    { "id": "leader",       "name": "AI Team Leader",  "subtitle": "Adopting",      "order": 3 },
-    { "id": "cto",          "name": "AI CTO",          "subtitle": "Leading",       "order": 4 }
+    { "id": "foundations",  "name": "AI Foundations",  "subtitle": "Understanding", "order": 1, "bonusXP": 200,  "completionTitle": "Foundation Forged",    "completionFlavor": "You can hold your own in any AI conversation now. The basics are no longer something you have to fake." },
+    { "id": "practitioner", "name": "AI Practitioner", "subtitle": "Using",         "order": 2, "bonusXP": 400,  "completionTitle": "Practitioner Unlocked",  "completionFlavor": "You don't just talk about AI — you ship it. Welcome to the tier where you start changing how your team works." },
+    { "id": "leader",       "name": "AI Team Leader",  "subtitle": "Adopting",      "order": 3, "bonusXP": 600,  "completionTitle": "Leader Ascended",        "completionFlavor": "You are the reason a team — maybe several — gets AI right. The SPOC title is now factually true." },
+    { "id": "cto",          "name": "AI CTO",          "subtitle": "Leading",       "order": 4, "bonusXP": 1000, "completionTitle": "CTO Ready",              "completionFlavor": "Every skill in this tree is mastered with evidence. Put the portfolio in front of someone — this is the seat." }
   ],
   "nodes": [
     {

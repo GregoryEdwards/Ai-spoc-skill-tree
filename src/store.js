@@ -19,7 +19,9 @@ function emptySave() {
     streak: {
       days: 0,
       lastActiveDate: null
-    }
+    },
+    celebratedTiers: [],
+    pendingCelebration: null
   };
 }
 
@@ -52,6 +54,8 @@ function migrate(save) {
   if (!save.nodes) save.nodes = {};
   if (!save.quests) save.quests = { active: [], completed: [], lastRotatedAt: null };
   if (!save.streak) save.streak = { days: 0, lastActiveDate: null };
+  if (!save.celebratedTiers) save.celebratedTiers = [];
+  if (save.pendingCelebration === undefined) save.pendingCelebration = null;
   return save;
 }
 
@@ -168,6 +172,30 @@ export function createStore() {
     reset() {
       localStorage.removeItem(SAVE_KEY);
       commit(emptySave());
+    },
+
+    celebrateTier(tier) {
+      if (state.celebratedTiers.includes(tier.id)) return;
+      const bonusXP = tier.bonusXP ?? 0;
+      commit({
+        ...state,
+        profile: { ...state.profile, totalXP: state.profile.totalXP + bonusXP },
+        celebratedTiers: [...state.celebratedTiers, tier.id],
+        pendingCelebration: {
+          tierId: tier.id,
+          tierName: tier.name,
+          subtitle: tier.subtitle,
+          title: tier.completionTitle ?? `${tier.name} Complete`,
+          flavor: tier.completionFlavor ?? "",
+          bonusXP,
+          awardedAt: new Date().toISOString()
+        }
+      });
+    },
+
+    dismissCelebration() {
+      if (!state.pendingCelebration) return;
+      commit({ ...state, pendingCelebration: null });
     },
 
     effectiveStreak() {

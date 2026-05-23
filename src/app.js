@@ -95,12 +95,24 @@ async function main() {
     tooltipEl: document.getElementById("node-tooltip")
   });
 
+  function detectTierCompletions() {
+    for (const tier of skills.tiers) {
+      if (store.state.celebratedTiers.includes(tier.id)) continue;
+      const tierNodes = skills.nodes.filter((n) => n.tier === tier.id);
+      if (!tierNodes.length) continue;
+      const allMastered = tierNodes.every((n) => computeStatus(n.id) === "mastered");
+      if (allMastered) store.celebrateTier(tier);
+    }
+  }
+
   function renderAll() {
+    detectTierCompletions();
     syncLevel();
     renderHeader();
     tree.render();
     if (panel.currentNodeId) panel.refresh();
     questEngine.render();
+    maybeShowCelebration();
   }
 
   const questEngine = createQuestEngine({
@@ -184,6 +196,30 @@ async function main() {
     dialogBody.textContent = body;
     if (typeof dialog.showModal === "function") dialog.showModal();
     else dialog.setAttribute("open", "");
+  }
+
+  // Tier-completion celebration
+  const celebrationDialog = document.getElementById("celebration-dialog");
+  const celebrationEyebrow = document.getElementById("celebration-eyebrow");
+  const celebrationTitle = document.getElementById("celebration-title");
+  const celebrationFlavor = document.getElementById("celebration-flavor");
+  const celebrationXP = document.getElementById("celebration-xp");
+  const celebrationGlow = celebrationDialog.querySelector(".celebration-glow");
+  document.getElementById("celebration-close").addEventListener("click", () => {
+    store.dismissCelebration();
+    if (celebrationDialog.open) celebrationDialog.close();
+    renderAll();
+  });
+  function maybeShowCelebration() {
+    const c = store.state.pendingCelebration;
+    if (!c || celebrationDialog.open) return;
+    celebrationEyebrow.textContent = `${c.tierName.toUpperCase()} — ${c.subtitle.toUpperCase()} COMPLETE`;
+    celebrationTitle.textContent = c.title;
+    celebrationFlavor.textContent = c.flavor;
+    celebrationXP.textContent = `+${c.bonusXP} XP`;
+    celebrationGlow.setAttribute("data-tier", c.tierId);
+    if (typeof celebrationDialog.showModal === "function") celebrationDialog.showModal();
+    else celebrationDialog.setAttribute("open", "");
   }
 
   renderAll();

@@ -466,6 +466,90 @@ input, textarea { font-family: inherit; }
 .prereq-check { color: var(--green); }
 .prereq-x { color: var(--text-dim); }
 
+/* Celebration dialog */
+.celebration-dialog {
+  background: transparent;
+  border: none;
+  padding: 0;
+  max-width: 520px;
+  width: 90vw;
+  overflow: visible;
+}
+.celebration-dialog::backdrop { background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); }
+.celebration-body {
+  position: relative;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 36px 32px;
+  text-align: center;
+  z-index: 1;
+  overflow: hidden;
+}
+.celebration-glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 60%);
+  opacity: 0.35;
+  z-index: 0;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.celebration-glow[data-tier="foundations"]  { background: radial-gradient(ellipse at center, var(--tier-1) 0%, transparent 60%); }
+.celebration-glow[data-tier="practitioner"] { background: radial-gradient(ellipse at center, var(--tier-2) 0%, transparent 60%); }
+.celebration-glow[data-tier="leader"]       { background: radial-gradient(ellipse at center, var(--tier-3) 0%, transparent 60%); }
+.celebration-glow[data-tier="cto"]          { background: radial-gradient(ellipse at center, var(--tier-4) 0%, transparent 60%); }
+@keyframes pulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%      { opacity: 0.5;  transform: scale(1.05); }
+}
+.celebration-eyebrow {
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+  animation: shimmer 2s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.4); }
+}
+.celebration-title {
+  margin: 0 0 12px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.celebration-flavor {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  position: relative;
+  z-index: 1;
+}
+.celebration-xp {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), #f59e0b);
+  color: #1a0e00;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.45);
+}
+.celebration-cta {
+  display: block;
+  margin: 0 auto;
+  min-width: 120px;
+}
+
 /* Prompt dialog */
 .prompt-dialog {
   background: var(--bg-2);
