@@ -11,6 +11,7 @@
       "tier": "foundations",
       "title": "How LLMs Work",
       "summary": "Tokens, context windows, temperature, and the transformer in plain English. The mental model everything else builds on.",
+      "whyItMatters": "Every conversation you'll have as an AI SPOC starts here. If you can't explain what a token is, you'll get rolled by vendors who say 'context window' to mean three different things.",
       "prerequisites": [],
       "xp": 50,
       "evidenceCriteria": [
@@ -20,7 +21,9 @@
       ],
       "resources": [
         { "label": "3Blue1Brown — But what is a GPT?", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M" },
-        { "label": "Andrej Karpathy — Intro to LLMs", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g" }
+        { "label": "Andrej Karpathy — Intro to LLMs (1hr talk)", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g" },
+        { "label": "Jay Alammar — The Illustrated Transformer" },
+        { "label": "Anthropic docs — Glossary of model terms", "url": "https://docs.anthropic.com/en/docs/about-claude/glossary" }
       ]
     },
     {
@@ -28,6 +31,7 @@
       "tier": "foundations",
       "title": "Prompt Engineering Fundamentals",
       "summary": "System vs user messages, role priming, instructions vs examples, why specificity wins.",
+      "whyItMatters": "This is the skill people will most often see you demonstrate. A SPOC who writes sharp prompts becomes the person everyone forwards their tricky AI questions to.",
       "prerequisites": ["llm-basics"],
       "xp": 50,
       "evidenceCriteria": [
@@ -35,7 +39,9 @@
         "Can articulate why one prompt outperforms another with evidence"
       ],
       "resources": [
-        { "label": "Anthropic Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" }
+        { "label": "Anthropic — Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" },
+        { "label": "OpenAI — Best practices for prompt engineering" },
+        { "label": "Learn Prompting (open course)", "url": "https://learnprompting.org" }
       ]
     },
     {
@@ -43,71 +49,98 @@
       "tier": "foundations",
       "title": "Embeddings & Vector Search",
       "summary": "What an embedding is, why cosine similarity matters, how vector DBs power semantic search.",
+      "whyItMatters": "Embeddings unlock the most common real business use case for LLMs at work: searching your own knowledge. Once this clicks, you'll spot RAG opportunities everywhere.",
       "prerequisites": ["llm-basics"],
       "xp": 60,
       "evidenceCriteria": [
         "Built a semantic search over a personal document set",
         "Can explain when embeddings beat keyword search and when they don't"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Simon Willison — Embeddings: What they are and why they matter", "url": "https://simonwillison.net/2023/Oct/23/embeddings/" },
+        { "label": "Vicki Boykis — What are embeddings? (PDF book, free)" },
+        { "label": "OpenAI Cookbook — Embeddings recipes" }
+      ]
     },
     {
       "id": "eval-hallucination",
       "tier": "foundations",
       "title": "Evaluation & Hallucination",
       "summary": "How to tell if an LLM output is actually good. Eval sets, golden answers, why 'looks right' isn't right.",
+      "whyItMatters": "The difference between 'we tried AI and it didn't work' and 'we shipped AI that pays for itself' is almost always evaluation. Without it you're guessing in front of stakeholders.",
       "prerequisites": ["prompt-fundamentals"],
       "xp": 60,
       "evidenceCriteria": [
         "Built an eval set of 20+ prompts for a real task",
         "Can name three categories of hallucination and how to detect each"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Hamel Husain — Your AI product needs evals", "url": "https://hamel.dev/blog/posts/evals/" },
+        { "label": "Eugene Yan — Patterns for Building LLM-based Systems & Products" },
+        { "label": "Anthropic — Reducing hallucinations" }
+      ]
     },
     {
       "id": "cost-latency",
       "tier": "foundations",
       "title": "Cost, Latency & Tradeoffs",
       "summary": "Tokens cost money and time. Streaming, caching, batching, model size tradeoffs.",
+      "whyItMatters": "Most failed AI projects die from sticker shock at scale, not from bad results. Owning this conversation early is what turns a SPOC into a trusted advisor.",
       "prerequisites": ["llm-basics"],
       "xp": 40,
       "evidenceCriteria": [
         "Can ballpark the per-call cost of a given prompt + model",
         "Reduced cost or latency of a real call by 50%+ with evidence"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Anthropic — Prompt caching", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" },
+        { "label": "OpenAI — Latency optimization guide" },
+        { "label": "Pricing pages — keep a comparison sheet of Claude / GPT / Gemini / open models" }
+      ]
     },
     {
       "id": "ai-ethics-privacy",
       "tier": "foundations",
       "title": "Ethics, Privacy & Data Handling",
       "summary": "PII in prompts, data retention by provider, copyright grey zones, bias risks.",
+      "whyItMatters": "Legal and security teams will be your first hard gate at any real workplace. Knowing the answers before they ask the questions is how you earn 'AI SPOC' as a title rather than a nickname.",
       "prerequisites": [],
       "xp": 50,
       "evidenceCriteria": [
         "Can list which provider retains data and for how long",
         "Drafted a one-page 'safe AI usage' guide for a team"
       ],
-      "resources": []
+      "resources": [
+        { "label": "NIST AI Risk Management Framework" },
+        { "label": "EU AI Act — Explainer (Future of Life Institute)" },
+        { "label": "Anthropic Usage Policy", "url": "https://www.anthropic.com/legal/aup" }
+      ]
     },
     {
       "id": "ai-landscape",
       "tier": "foundations",
       "title": "The AI Landscape",
       "summary": "Frontier labs (Anthropic, OpenAI, Google, Meta, xAI), open-weight models, the inference-provider layer, and where it's all heading.",
+      "whyItMatters": "You can't recommend tools you don't know exist. Staying current is half the job — and the half people most expect a SPOC to handle.",
       "prerequisites": [],
       "xp": 30,
       "evidenceCriteria": [
         "Can name top 3 frontier models and their differentiators",
         "Tracks 2+ AI newsletters / sources weekly"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Simon Willison's blog (weekly LLM notes)", "url": "https://simonwillison.net" },
+        { "label": "Latent Space (podcast + newsletter)" },
+        { "label": "The Pragmatic Engineer — AI deep dives" },
+        { "label": "lmsys.org Chatbot Arena leaderboard" }
+      ]
     },
     {
       "id": "hands-on-assistant",
       "tier": "foundations",
       "title": "Hands-On: Build a Personal Assistant",
       "summary": "Capstone for Tier 1. A working LLM-powered tool you actually use day to day.",
+      "whyItMatters": "There is no substitute for shipping. The first time you actually rely on something you built, every concept in this tier collapses into intuition.",
       "prerequisites": ["prompt-fundamentals", "cost-latency", "ai-ethics-privacy"],
       "xp": 100,
       "evidenceCriteria": [
@@ -115,7 +148,10 @@
         "Code committed to a repo with a README",
         "Wrote a short post-mortem: what worked, what didn't"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Anthropic API quickstart", "url": "https://docs.anthropic.com/en/api/getting-started" },
+        { "label": "Claude Code — agent-style local CLI", "url": "https://docs.claude.com/claude-code" }
+      ]
     },
 
     {
@@ -123,123 +159,167 @@
       "tier": "practitioner",
       "title": "Advanced Prompting Patterns",
       "summary": "Chain-of-thought, few-shot, structured output (JSON mode), self-critique, prompt chaining.",
+      "whyItMatters": "Basic prompts solve toy problems. Advanced patterns are how you take a flaky demo to something you'd put in front of a customer or executive.",
       "prerequisites": ["prompt-fundamentals"],
       "xp": 70,
       "evidenceCriteria": [
         "Used 3+ advanced patterns to solve real problems",
         "Can explain when chain-of-thought helps vs hurts"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Anthropic — Prompt engineering techniques (full chapter)" },
+        { "label": "Lilian Weng — Prompt Engineering" },
+        { "label": "OpenAI Cookbook — Structured outputs / function calling" }
+      ]
     },
     {
       "id": "rag-patterns",
       "tier": "practitioner",
       "title": "RAG Patterns",
       "summary": "Retrieval-augmented generation: chunking strategies, hybrid search, reranking, context stuffing limits.",
+      "whyItMatters": "Most '90% of useful business value' AI projects are RAG in some form. If you can run a real RAG iteration end-to-end you'll never run out of work.",
       "prerequisites": ["embeddings-vectors", "advanced-prompting"],
       "xp": 90,
       "evidenceCriteria": [
         "Shipped a RAG app over a non-trivial corpus",
         "Iterated on chunk size + retrieval strategy with measured impact"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Anthropic — Contextual retrieval", "url": "https://www.anthropic.com/news/contextual-retrieval" },
+        { "label": "Jason Liu — RAG advice (blog series)" },
+        { "label": "LlamaIndex docs — Retrieval techniques", "url": "https://docs.llamaindex.ai" }
+      ]
     },
     {
       "id": "agents-tools",
       "tier": "practitioner",
       "title": "Agents & Tool Use",
       "summary": "Function calling, tool loops, multi-step agents, when an agent is overkill vs essential.",
+      "whyItMatters": "Agents are the 2025–2026 hype cycle. Knowing which problems actually need one — and which don't — is the difference between a costly demo and a useful product.",
       "prerequisites": ["advanced-prompting"],
       "xp": 90,
       "evidenceCriteria": [
         "Built an agent that uses at least 3 tools to complete a task end-to-end",
         "Can articulate the 'agent vs workflow' tradeoff"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Anthropic — Building effective agents", "url": "https://www.anthropic.com/research/building-effective-agents" },
+        { "label": "Anthropic — Tool use docs", "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use" },
+        { "label": "Harrison Chase — LangGraph patterns" }
+      ]
     },
     {
       "id": "finetune-vs-prompt",
       "tier": "practitioner",
       "title": "Fine-Tuning vs Prompting",
       "summary": "When fine-tuning is worth it, when it's a trap. LoRA, distillation, evals as the deciding factor.",
+      "whyItMatters": "Vendors will push fine-tuning because it locks you in. Knowing when it's actually the right call (rarely) and when it isn't (usually) protects your org from expensive mistakes.",
       "prerequisites": ["eval-hallucination", "advanced-prompting"],
       "xp": 70,
       "evidenceCriteria": [
         "Ran one fine-tuning experiment OR convincingly argued why not to",
         "Can give the decision framework in under 5 minutes"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Hamel Husain — Fine-tuning is not all you need" },
+        { "label": "Anthropic — Claude fine-tuning on Bedrock" },
+        { "label": "OpenAI fine-tuning guide" }
+      ]
     },
     {
       "id": "model-selection",
       "tier": "practitioner",
       "title": "Choosing Models for Tasks",
       "summary": "Big-model-for-hard-problem vs small-model-for-volume. Capability tiers, latency budgets, fallback chains.",
+      "whyItMatters": "Most teams default to GPT-4-class for everything and burn budget. A SPOC who can match model to task is worth their salary in saved spend.",
       "prerequisites": ["cost-latency", "ai-landscape"],
       "xp": 60,
       "evidenceCriteria": [
         "Documented a model-selection rubric used on a real project",
         "Mixed 2+ models in a single product flow"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Artificial Analysis — model benchmarks + price/perf", "url": "https://artificialanalysis.ai" },
+        { "label": "Anthropic — Choosing a model", "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview" }
+      ]
     },
     {
       "id": "local-models",
       "tier": "practitioner",
       "title": "Running Local Models",
       "summary": "Ollama, llama.cpp, quantization, when local beats cloud (privacy, cost, latency, offline).",
+      "whyItMatters": "Some workloads can never leave the building. Knowing the local ecosystem is what lets you say 'yes' to legal/security when others have to say 'no'.",
       "prerequisites": ["llm-basics"],
       "xp": 50,
       "evidenceCriteria": [
         "Ran a 7B+ model locally and used it for a real task",
         "Can articulate when local is the right call"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Ollama — get started", "url": "https://ollama.com" },
+        { "label": "Hugging Face — Open LLM Leaderboard", "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard" },
+        { "label": "llama.cpp GitHub README" }
+      ]
     },
     {
       "id": "prompt-versioning",
       "tier": "practitioner",
       "title": "Prompt Versioning & Testing",
       "summary": "Prompts are code. Version them, diff them, test them on regression sets before shipping.",
+      "whyItMatters": "Every team eventually hits 'why did the chatbot get worse?'. Teams with versioned, tested prompts know in an hour. Teams without find out from customers.",
       "prerequisites": ["advanced-prompting", "eval-hallucination"],
       "xp": 60,
       "evidenceCriteria": [
         "Set up a prompt-test pipeline (manual or automated) for one product",
         "Caught a regression before users did"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Promptfoo — open-source prompt testing", "url": "https://promptfoo.dev" },
+        { "label": "Langfuse — prompt management + observability", "url": "https://langfuse.com" }
+      ]
     },
     {
       "id": "observability-logging",
       "tier": "practitioner",
       "title": "Observability & Logging",
       "summary": "Trace every LLM call. Tools (Langfuse, Helicone, custom). What to log, what to redact.",
+      "whyItMatters": "You cannot fix what you cannot see. The day a user reports a hallucination from last Tuesday, observability is what saves your weekend.",
       "prerequisites": ["eval-hallucination"],
       "xp": 60,
       "evidenceCriteria": [
         "Instrumented one app so you can debug a bad output a week later",
         "Built one dashboard tracking cost, latency, quality"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Langfuse — open-source LLM observability", "url": "https://langfuse.com" },
+        { "label": "Helicone", "url": "https://www.helicone.ai" },
+        { "label": "Honeycomb — applying observability to LLMs (blog series)" }
+      ]
     },
     {
       "id": "safety-guardrails",
       "tier": "practitioner",
       "title": "Safety Guardrails",
       "summary": "Prompt injection, output filtering, jailbreak resistance, sensitive-topic handling.",
+      "whyItMatters": "The first time your AI says something embarrassing on a customer call is a career-defining moment. Guardrails are how you avoid it.",
       "prerequisites": ["ai-ethics-privacy", "advanced-prompting"],
       "xp": 70,
       "evidenceCriteria": [
         "Red-teamed your own app and patched 3+ findings",
         "Can list the top 5 prompt-injection vectors"
       ],
-      "resources": []
+      "resources": [
+        { "label": "OWASP LLM Top 10", "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/" },
+        { "label": "Simon Willison — Prompt injection writeups (blog tag)" },
+        { "label": "Anthropic — Mitigating jailbreaks & prompt injections" }
+      ]
     },
     {
       "id": "hands-on-internal-tool",
       "tier": "practitioner",
       "title": "Hands-On: Ship an Internal AI Tool",
       "summary": "Capstone for Tier 2. A real tool deployed at work, used by at least one team that isn't yours.",
+      "whyItMatters": "This is the credibility-flipping moment. Before: 'Greg is into AI'. After: 'Greg built the thing the sales team uses every day'. That's the foundation for everything in Tier 3.",
       "prerequisites": ["rag-patterns", "agents-tools", "observability-logging"],
       "xp": 200,
       "evidenceCriteria": [
@@ -255,6 +335,7 @@
       "tier": "leader",
       "title": "Identifying High-Value Use Cases",
       "summary": "Where AI actually moves the needle. The 'expensive human judgment that repeats' lens. Killing bad ideas fast.",
+      "whyItMatters": "Most AI projects fail at idea-selection, not at execution. A SPOC who can confidently say 'no, that one won't work' becomes the gatekeeper everyone wants.",
       "prerequisites": ["hands-on-internal-tool"],
       "xp": 80,
       "evidenceCriteria": [
@@ -262,65 +343,86 @@
         "Killed 7+ of them with reasoning before any code was written",
         "Got one prioritized into a real backlog"
       ],
-      "resources": []
+      "resources": [
+        { "label": "a16z — Emerging Architectures for LLM Applications" },
+        { "label": "Sequoia — Generative AI Act II" },
+        { "label": "Andrew Ng — AI Transformation Playbook (Landing.AI)" }
+      ]
     },
     {
       "id": "discovery-workshop",
       "tier": "leader",
       "title": "Running an AI Discovery Workshop",
       "summary": "Facilitating a session that surfaces real pain + real opportunity in 90 minutes. Templates, exercises, follow-ups.",
+      "whyItMatters": "Workshops are how you scale yourself. One good workshop generates more aligned use cases than three months of 1:1s.",
       "prerequisites": ["identifying-use-cases"],
       "xp": 90,
       "evidenceCriteria": [
         "Ran one workshop with 5+ stakeholders",
         "Walked out with a prioritized opportunity list and exec sign-off"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Teresa Torres — Continuous Discovery Habits (book)" },
+        { "label": "Google Design Sprint kit (adapt for AI discovery)" }
+      ]
     },
     {
       "id": "change-management",
       "tier": "leader",
       "title": "Change Management for AI Adoption",
       "summary": "People don't fear AI; they fear losing relevance. Communication, training, opt-in vs mandate, dealing with skeptics.",
+      "whyItMatters": "The hardest part of AI at work is never the technology. A SPOC who can move skeptics — without bulldozing them — becomes indispensable.",
       "prerequisites": ["discovery-workshop"],
       "xp": 80,
       "evidenceCriteria": [
         "Brought one resistant team to active adoption",
         "Documented the playbook you used"
       ],
-      "resources": []
+      "resources": [
+        { "label": "John Kotter — Leading Change (8-step model)" },
+        { "label": "BCG — The CEO's Guide to AI Transformation" },
+        { "label": "Ethan Mollick — Co-Intelligence (book)" }
+      ]
     },
     {
       "id": "vendor-vs-build",
       "tier": "leader",
       "title": "Vendor vs Build Evaluation",
       "summary": "When to buy (most of the time), when to build (rare, but real). RFP rubrics for AI vendors, hidden lock-in risks.",
+      "whyItMatters": "Vendors are racing to lock orgs into platforms before buyers know what they need. A SPOC with a real rubric saves their company from multi-year regret.",
       "prerequisites": ["model-selection", "finetune-vs-prompt"],
       "xp": 70,
       "evidenceCriteria": [
         "Ran a real vendor-vs-build decision with documented reasoning",
         "Negotiated one AI vendor contract"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Martin Casado / a16z — Build vs buy in the AI stack" }
+      ]
     },
     {
       "id": "data-readiness",
       "tier": "leader",
       "title": "Data Readiness Assessment",
       "summary": "AI is only as good as the data. Auditing what you have, what's missing, what's compliant, what's poisoned.",
+      "whyItMatters": "Half the AI projects you'll be asked to scope can't actually be built — the data isn't there. Spotting that in week one rather than month six is a senior-level skill.",
       "prerequisites": ["rag-patterns", "ai-ethics-privacy"],
       "xp": 80,
       "evidenceCriteria": [
         "Produced a data-readiness scorecard for one domain",
         "Closed 2+ data gaps that unblocked a use case"
       ],
-      "resources": []
+      "resources": [
+        { "label": "DAMA-DMBOK — Data Management Body of Knowledge" },
+        { "label": "Monte Carlo / Data Reliability Engineering blog" }
+      ]
     },
     {
       "id": "upskilling-team",
       "tier": "leader",
       "title": "Upskilling Teammates",
       "summary": "Lunch-and-learns, prompt libraries, pair-prompting, internal champions. Building org-wide capability.",
+      "whyItMatters": "Your real leverage isn't what you ship — it's the 50 people you teach to ship without you. This is how a SPOC becomes a CTO.",
       "prerequisites": ["advanced-prompting", "change-management"],
       "xp": 80,
       "evidenceCriteria": [
@@ -328,52 +430,68 @@
         "Created a self-serve resource hub used after you stop pushing it",
         "Identified and grew 2+ internal champions"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Anthropic — Prompt library (steal patterns for your own)" }
+      ]
     },
     {
       "id": "pilot-to-production",
       "tier": "leader",
       "title": "Pilot → Production Playbook",
       "summary": "Killing the demo-that-never-ships pattern. Acceptance criteria, ownership, rollback plans, sunset triggers.",
+      "whyItMatters": "AI is famous for impressive pilots that never become products. A documented production playbook is how you become the rare org that actually ships.",
       "prerequisites": ["hands-on-internal-tool", "observability-logging"],
       "xp": 100,
       "evidenceCriteria": [
         "Took one AI pilot to production with documented playbook",
         "Killed one that didn't deserve to ship"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Google — MLOps maturity model" },
+        { "label": "Chip Huyen — Designing Machine Learning Systems (book)" }
+      ]
     },
     {
       "id": "measuring-roi",
       "tier": "leader",
       "title": "Measuring AI ROI",
       "summary": "Beyond 'feels useful'. Time saved, errors avoided, deflection rate, revenue lift. Honest before/after.",
+      "whyItMatters": "Vague AI wins get cut in the next budget round. Numbered ones get funded again. A SPOC who measures honestly survives downturns.",
       "prerequisites": ["identifying-use-cases"],
       "xp": 80,
       "evidenceCriteria": [
         "Published one ROI case study with real numbers",
         "Defended it under skeptical questioning"
       ],
-      "resources": []
+      "resources": [
+        { "label": "McKinsey — The economic potential of generative AI" },
+        { "label": "BCG / Bain — AI ROI playbooks" }
+      ]
     },
     {
       "id": "policy-governance",
       "tier": "leader",
       "title": "Policy & Governance",
       "summary": "Acceptable-use policy, approval workflows, data classification, vendor review, regulator-readiness.",
+      "whyItMatters": "Every org needs an AI policy, almost none have a good one. Drafting the first credible version puts you in the room for every AI decision after.",
       "prerequisites": ["safety-guardrails", "ai-ethics-privacy"],
       "xp": 90,
       "evidenceCriteria": [
         "Drafted or substantially improved an org-wide AI policy",
         "Got it adopted by legal/security/leadership"
       ],
-      "resources": []
+      "resources": [
+        { "label": "NIST AI Risk Management Framework (AI RMF)" },
+        { "label": "EU AI Act — text + summaries" },
+        { "label": "Anthropic — Acceptable Use Policy (good template)" }
+      ]
     },
     {
       "id": "hands-on-team-adoption",
       "tier": "leader",
       "title": "Hands-On: Lead a Team's AI Adoption",
       "summary": "Capstone for Tier 3. Pick a team, take them from zero to capable, document everything.",
+      "whyItMatters": "Before this capstone you're 'an AI person'. After it you're 'the person who made another team better at AI'. That second story is the one that gets you the CTO seat.",
       "prerequisites": ["change-management", "pilot-to-production", "measuring-roi"],
       "xp": 300,
       "evidenceCriteria": [
@@ -389,32 +507,41 @@
       "tier": "cto",
       "title": "AI Strategy & Roadmap",
       "summary": "Where AI fits in the 1, 3, 5-year vision. Differentiation vs hygiene. Bets, not initiatives.",
+      "whyItMatters": "Strategy is what separates a CTO from a senior IC. Writing one that survives executive critique is the artifact you'll hand to your next hiring panel.",
       "prerequisites": ["hands-on-team-adoption"],
       "xp": 150,
       "evidenceCriteria": [
         "Authored an AI strategy doc that survived exec critique",
         "Translated it into a quarterly roadmap with owners"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Richard Rumelt — Good Strategy / Bad Strategy (book)" },
+        { "label": "HBR — How to write a strategy memo" }
+      ]
     },
     {
       "id": "org-design",
       "tier": "cto",
       "title": "Org Design for AI",
       "summary": "Centralized AI team vs embedded vs platform-plus-embedded. Hiring profiles. Where the model lives in the org chart.",
+      "whyItMatters": "Org design is one of the few decisions that's expensive to undo. Getting it 70% right early beats getting it 100% right two years late.",
       "prerequisites": ["upskilling-team", "hands-on-team-adoption"],
       "xp": 120,
       "evidenceCriteria": [
         "Proposed an org structure with rationale to leadership",
         "Made one structural change that improved AI velocity"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Team Topologies — Skelton & Pais (book)" },
+        { "label": "Camille Fournier — The Manager's Path" }
+      ]
     },
     {
       "id": "build-buy-partner",
       "tier": "cto",
       "title": "Build / Buy / Partner at Scale",
       "summary": "Same question as Tier 3 but with capex, multi-year contracts, and strategic partnerships in play.",
+      "whyItMatters": "At the CTO level these decisions have 8-figure consequences. Defending them under board scrutiny is the new test.",
       "prerequisites": ["vendor-vs-build", "ai-strategy-roadmap"],
       "xp": 120,
       "evidenceCriteria": [
@@ -428,71 +555,90 @@
       "tier": "cto",
       "title": "AI Platform Thinking",
       "summary": "Shared infra so every team doesn't rebuild the wheel: model registry, eval harness, prompt library, observability, gateways.",
+      "whyItMatters": "Platforms are how an AI CTO converts one good engineer's work into ten teams' velocity. Without a platform you ceiling out.",
       "prerequisites": ["pilot-to-production", "observability-logging"],
       "xp": 150,
       "evidenceCriteria": [
         "Stood up one shared AI platform capability used by 3+ teams",
         "Measured platform leverage (time-to-launch reduction)"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Team Topologies — Platform team patterns" },
+        { "label": "Will Larson — An Elegant Puzzle (book)" }
+      ]
     },
     {
       "id": "risk-compliance-leadership",
       "tier": "cto",
       "title": "Risk & Compliance Leadership",
       "summary": "Owning AI risk at the exec level. EU AI Act, SOC2 mappings, model audit trails, board reporting.",
+      "whyItMatters": "Regulators are racing to catch up. A CTO who can talk fluently to audit and legal is the rare bridge between innovation and not getting fined.",
       "prerequisites": ["policy-governance"],
       "xp": 130,
       "evidenceCriteria": [
         "Passed an external audit or assessment of AI controls",
         "Briefed board or audit committee on AI risk posture"
       ],
-      "resources": []
+      "resources": [
+        { "label": "ISO/IEC 42001 — AI management systems standard" },
+        { "label": "NIST AI RMF — Generative AI Profile" }
+      ]
     },
     {
       "id": "ai-budgeting",
       "tier": "cto",
       "title": "AI Budgeting & Spend",
       "summary": "Forecasting token spend at scale, capacity planning, chargeback models, the 'AI is free until it isn't' trap.",
+      "whyItMatters": "AI spend can balloon 10x in a quarter without warning. The CTO who saw it coming earns trust for the next decade of decisions.",
       "prerequisites": ["measuring-roi", "build-buy-partner"],
       "xp": 110,
       "evidenceCriteria": [
         "Owned an AI budget line with quarterly forecasts",
         "Came in within 10% two quarters running"
       ],
-      "resources": []
+      "resources": [
+        { "label": "FinOps Foundation — emerging GenAI cost guidance" }
+      ]
     },
     {
       "id": "board-communication",
       "tier": "cto",
       "title": "Board-Level Communication",
       "summary": "Explaining AI to non-technical leaders. Risk + opportunity narrative. Saying 'I don't know' productively.",
+      "whyItMatters": "The board never needs more jargon. They need confidence that someone in the room actually understands what's happening. That someone should be you.",
       "prerequisites": ["ai-strategy-roadmap"],
       "xp": 110,
       "evidenceCriteria": [
         "Delivered 2+ board updates on AI with clear asks",
         "Changed a board decision with your input"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Amazon — Writing 6-page narratives (template + examples)" },
+        { "label": "Andy Grove — High Output Management (book)" }
+      ]
     },
     {
       "id": "talent-acquisition",
       "tier": "cto",
       "title": "Talent Acquisition & Retention",
       "summary": "Who you actually need (ML engineers vs prompt engineers vs product), how to attract them, how to keep them.",
+      "whyItMatters": "AI talent shopping is brutal in 2025–2026. A CTO who can hire and keep great people is more valuable than one who can ship anything themselves.",
       "prerequisites": ["org-design"],
       "xp": 110,
       "evidenceCriteria": [
         "Hired or grew 2+ AI roles",
         "Retention story: kept a key AI person you were at risk of losing"
       ],
-      "resources": []
+      "resources": [
+        { "label": "Lenny's Newsletter — AI hiring frameworks" }
+      ]
     },
     {
       "id": "cross-functional-alignment",
       "tier": "cto",
       "title": "Cross-Functional Alignment",
       "summary": "Legal, security, product, sales, marketing all have stakes in AI. Running the room.",
+      "whyItMatters": "Most AI projects die at the seams between functions. The leader who can run those seams becomes the one everyone trusts to call the shot.",
       "prerequisites": ["change-management", "ai-strategy-roadmap"],
       "xp": 100,
       "evidenceCriteria": [
@@ -506,6 +652,7 @@
       "tier": "cto",
       "title": "Hands-On: Company-Wide AI Strategy",
       "summary": "Final capstone. A written strategy adopted by your org (or one you've consulted for) — the artifact you'd put in front of a CTO-search hiring panel.",
+      "whyItMatters": "This is the trophy that closes the loop. From AI-curious to authored-and-shipped-strategy in one document. The story this artifact tells is the one that opens the next door.",
       "prerequisites": ["ai-strategy-roadmap", "ai-budgeting", "board-communication", "platform-thinking"],
       "xp": 500,
       "evidenceCriteria": [

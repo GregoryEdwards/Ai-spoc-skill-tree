@@ -265,6 +265,17 @@ input, textarea { font-family: inherit; }
 .panel-tier { color: var(--text-dim); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
 .panel-summary { color: var(--text); line-height: 1.55; }
 .panel-section { margin-top: 6px; }
+.panel-why {
+  margin-top: 4px;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, rgba(110, 231, 255, 0.06), rgba(167, 139, 250, 0.06));
+  border: 1px solid rgba(110, 231, 255, 0.2);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+}
+.panel-why .panel-section-title { margin-bottom: 4px; }
+.panel-why-body { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text); }
+.resource-no-url { color: var(--text-dim); font-size: 13px; }
 .panel-section-title {
   color: var(--text-dim);
   font-size: 11px;

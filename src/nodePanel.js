@@ -54,6 +54,20 @@ export function createNodePanel({ root, skills, store, computeStatus, onChange, 
     summary.textContent = node.summary;
     root.appendChild(summary);
 
+    if (node.whyItMatters) {
+      const why = document.createElement("div");
+      why.className = "panel-why";
+      const label = document.createElement("div");
+      label.className = "panel-section-title";
+      label.textContent = "Why this matters for an AI SPOC";
+      const body = document.createElement("p");
+      body.className = "panel-why-body";
+      body.textContent = node.whyItMatters;
+      why.appendChild(label);
+      why.appendChild(body);
+      root.appendChild(why);
+    }
+
     // Prerequisites
     if (node.prerequisites && node.prerequisites.length) {
       const prereqSection = section("Prerequisites");
@@ -99,12 +113,17 @@ export function createNodePanel({ root, skills, store, computeStatus, onChange, 
       ul.className = "resources";
       for (const r of node.resources) {
         const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = r.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.textContent = `↗ ${r.label}`;
-        li.appendChild(a);
+        if (r.url) {
+          const a = document.createElement("a");
+          a.href = r.url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = `↗ ${r.label}`;
+          li.appendChild(a);
+        } else {
+          li.textContent = `· ${r.label}`;
+          li.classList.add("resource-no-url");
+        }
         ul.appendChild(li);
       }
       sec.appendChild(ul);
