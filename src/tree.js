@@ -12,12 +12,14 @@ const TIER_HEADER_OFFSET = 60;
 const PADDING_X = 80;
 const PADDING_Y = 60;
 
-export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus }) {
+export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus, tooltipEl }) {
   let layout = null;
   let viewport = { x: 0, y: 0, scale: 1 };
   let selectedId = null;
   let searchQuery = "";
   let statusFilter = "all";
+
+  const nodeById = (id) => skills.nodes.find((n) => n.id === id);
 
   function statusOf(nodeId) { return getStatus(nodeId); }
 
@@ -217,6 +219,9 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
         render();
         onNodeClick?.(node);
       });
+      group.addEventListener("mouseenter", (ev) => showTooltip(node, ev));
+      group.addEventListener("mousemove", (ev) => positionTooltip(ev));
+      group.addEventListener("mouseleave", hideTooltip);
       nodesGroup.appendChild(group);
     }
 
@@ -224,6 +229,58 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
   }
 
   function truncate(s, n) { return s.length > n ? s.slice(0, n - 1) + "…" : s; }
+
+  function showTooltip(node, ev) {
+    if (!tooltipEl) return;
+    const status = statusOf(node.id);
+    const prereqs = node.prerequisites ?? [];
+    // only worth showing the tooltip for locked nodes (the why-locked story)
+    if (status !== "locked" || !prereqs.length) {
+      tooltipEl.hidden = true;
+      return;
+    }
+    tooltipEl.innerHTML = "";
+    const title = document.createElement("div");
+    title.className = "node-tooltip-title";
+    title.textContent = node.title;
+    const label = document.createElement("div");
+    label.className = "node-tooltip-label";
+    label.textContent = "Unlocks when mastered";
+    const list = document.createElement("div");
+    list.className = "node-tooltip-prereqs";
+    for (const pid of prereqs) {
+      const p = nodeById(pid);
+      if (!p) continue;
+      const met = statusOf(pid) === "mastered";
+      const row = document.createElement("div");
+      row.className = `node-tooltip-prereq ${met ? "met" : "unmet"}`;
+      row.textContent = `${met ? "✓" : "○"}  ${p.title}`;
+      list.appendChild(row);
+    }
+    tooltipEl.appendChild(title);
+    tooltipEl.appendChild(label);
+    tooltipEl.appendChild(list);
+    tooltipEl.hidden = false;
+    positionTooltip(ev);
+  }
+
+  function positionTooltip(ev) {
+    if (!tooltipEl || tooltipEl.hidden) return;
+    const wrap = svg.parentElement;
+    if (!wrap) return;
+    const wrapRect = wrap.getBoundingClientRect();
+    const x = ev.clientX - wrapRect.left + 14;
+    const y = ev.clientY - wrapRect.top + 14;
+    const ttRect = tooltipEl.getBoundingClientRect();
+    const maxX = wrapRect.width - ttRect.width - 8;
+    const maxY = wrapRect.height - ttRect.height - 8;
+    tooltipEl.style.left = `${Math.min(x, Math.max(0, maxX))}px`;
+    tooltipEl.style.top = `${Math.min(y, Math.max(0, maxY))}px`;
+  }
+
+  function hideTooltip() {
+    if (tooltipEl) tooltipEl.hidden = true;
+  }
 
   function applyViewport() {
     const root = svg.querySelector("#tree-root");

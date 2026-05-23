@@ -91,7 +91,8 @@ async function main() {
     skills,
     store,
     onNodeClick: (node) => panel.show(node.id),
-    getStatus: computeStatus
+    getStatus: computeStatus,
+    tooltipEl: document.getElementById("node-tooltip")
   });
 
   function renderAll() {

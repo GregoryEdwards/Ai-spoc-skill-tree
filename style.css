@@ -260,6 +260,38 @@ input, textarea { font-family: inherit; }
 .node.locked .node-bg { opacity: 0.45; stroke-dasharray: 4 3; }
 .node.locked .node-title { fill: var(--text-dim); }
 
+.node-tooltip {
+  position: absolute;
+  z-index: 20;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text);
+  max-width: 280px;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  line-height: 1.5;
+}
+.node-tooltip[hidden] { display: none; }
+.node-tooltip-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.node-tooltip-label {
+  color: var(--text-dim);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.node-tooltip-prereqs { display: flex; flex-direction: column; gap: 2px; }
+.node-tooltip-prereq { display: flex; gap: 6px; align-items: center; }
+.node-tooltip-prereq.met { color: var(--green); }
+.node-tooltip-prereq.unmet { color: var(--text-dim); }
+
 .node.unlocked .node-bg { stroke: var(--accent); filter: drop-shadow(0 0 4px rgba(110, 231, 255, 0.35)); }
 .node.in-progress .node-bg { stroke: var(--gold); filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.5)); }
 .node.mastered .node-bg { stroke: var(--green); fill: rgba(52, 211, 153, 0.08); filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.5)); }
