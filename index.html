@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI SPOC — Skill Tree</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">◆</span>
+        <div>
+          <div class="brand-title">AI SPOC</div>
+          <div class="brand-sub">Skill Tree</div>
+        </div>
+      </div>
+
+      <div class="profile">
+        <div class="profile-row">
+          <input id="profile-name" class="profile-name" type="text" placeholder="Your name" />
+          <button id="btn-export" class="btn ghost" title="Download save as JSON">Export</button>
+          <button id="btn-import" class="btn ghost" title="Restore save from JSON">Import</button>
+          <input id="import-file" type="file" accept="application/json" hidden />
+          <button id="btn-reset" class="btn danger" title="Wipe local save">Reset</button>
+        </div>
+        <div class="xp-row">
+          <span class="level-badge" id="level-badge">Lv 1</span>
+          <div class="xp-bar" title="XP toward next level">
+            <div class="xp-fill" id="xp-fill"></div>
+            <span class="xp-text" id="xp-text">0 / 100 XP</span>
+          </div>
+          <span class="total-xp" id="total-xp">0 XP total</span>
+        </div>
+      </div>
+    </header>
+
+    <section id="quest-strip" class="quest-strip" aria-label="Active quests"></section>
+
+    <main class="main">
+      <div class="tree-wrap">
+        <div class="tree-toolbar">
+          <button class="btn ghost" id="btn-zoom-in" title="Zoom in">+</button>
+          <button class="btn ghost" id="btn-zoom-out" title="Zoom out">−</button>
+          <button class="btn ghost" id="btn-fit" title="Fit to screen">Fit</button>
+          <span class="legend">
+            <span class="dot locked"></span>locked
+            <span class="dot unlocked"></span>unlocked
+            <span class="dot in-progress"></span>in progress
+            <span class="dot mastered"></span>mastered
+          </span>
+        </div>
+        <svg id="tree" class="tree" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+
+      <aside id="panel" class="panel empty">
+        <div class="panel-empty">Click a skill to view details.</div>
+      </aside>
+    </main>
+
+    <dialog id="prompt-dialog" class="prompt-dialog">
+      <div class="prompt-dialog-head">
+        <h3 id="prompt-dialog-title">Prompt</h3>
+        <button class="btn ghost" id="prompt-copy">Copy</button>
+        <button class="btn ghost" id="prompt-close">Close</button>
+      </div>
+      <pre id="prompt-dialog-body" class="prompt-body"></pre>
+    </dialog>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

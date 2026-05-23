@@ -1,0 +1,74 @@
+{
+  "quests": [
+    {
+      "id": "weekly-learn",
+      "title": "Read one frontier AI paper or essay",
+      "description": "Skim a recent post from Anthropic, OpenAI, DeepMind, or a notable blog. Write a 3-line summary in your evidence log.",
+      "xp": 50,
+      "category": "learn"
+    },
+    {
+      "id": "weekly-build",
+      "title": "Ship a small AI tool or improvement",
+      "description": "Build or improve one thing this week. CLI, script, agent — doesn't matter. It must run.",
+      "xp": 100,
+      "category": "build"
+    },
+    {
+      "id": "weekly-teach",
+      "title": "Teach one person something AI-related",
+      "description": "Pair-prompt, demo a workflow, send a useful link with context. Move someone forward.",
+      "xp": 75,
+      "category": "teach"
+    },
+    {
+      "id": "weekly-eval",
+      "title": "Evaluate something objectively",
+      "description": "Pick an AI output you depended on this week and grade it honestly. Was it actually right? Log the finding.",
+      "xp": 50,
+      "category": "evaluate"
+    },
+    {
+      "id": "weekly-network",
+      "title": "Talk to one AI practitioner outside your bubble",
+      "description": "DM, coffee, conference. One real conversation. Capture one insight that surprised you.",
+      "xp": 75,
+      "category": "network"
+    },
+    {
+      "id": "weekly-write",
+      "title": "Publish or share one piece of thinking",
+      "description": "Internal Slack post, blog draft, LinkedIn comment with substance. Put a stake in the ground.",
+      "xp": 75,
+      "category": "build"
+    },
+    {
+      "id": "weekly-prune",
+      "title": "Kill a stale in-progress skill",
+      "description": "Look at anything you've had 'in progress' for 30+ days. Either ship it this week or honestly mark it back to unlocked.",
+      "xp": 40,
+      "category": "evaluate"
+    },
+    {
+      "id": "weekly-use-case",
+      "title": "Surface one AI opportunity at work",
+      "description": "Find one place AI could save real time/money. Pitch it informally to one stakeholder this week.",
+      "xp": 80,
+      "category": "lead"
+    },
+    {
+      "id": "weekly-eval-set",
+      "title": "Add 5 prompts to your eval set",
+      "description": "Pick a workflow you use AI for. Add 5 test cases you can re-run after any prompt change.",
+      "xp": 60,
+      "category": "build"
+    },
+    {
+      "id": "weekly-policy",
+      "title": "Read one piece of AI policy or governance",
+      "description": "EU AI Act summary, an internal policy at a peer company, NIST AI RMF. Note the one thing that surprised you.",
+      "xp": 50,
+      "category": "learn"
+    }
+  ]
+}

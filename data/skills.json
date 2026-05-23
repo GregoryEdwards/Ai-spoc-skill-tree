@@ -1,0 +1,519 @@
+{
+  "tiers": [
+    { "id": "foundations",  "name": "AI Foundations",  "subtitle": "Understanding", "order": 1 },
+    { "id": "practitioner", "name": "AI Practitioner", "subtitle": "Using",         "order": 2 },
+    { "id": "leader",       "name": "AI Team Leader",  "subtitle": "Adopting",      "order": 3 },
+    { "id": "cto",          "name": "AI CTO",          "subtitle": "Leading",       "order": 4 }
+  ],
+  "nodes": [
+    {
+      "id": "llm-basics",
+      "tier": "foundations",
+      "title": "How LLMs Work",
+      "summary": "Tokens, context windows, temperature, and the transformer in plain English. The mental model everything else builds on.",
+      "prerequisites": [],
+      "xp": 50,
+      "evidenceCriteria": [
+        "Can explain attention to a non-technical colleague in 5 minutes",
+        "Can describe what a token is and why context windows matter",
+        "Built a toy chat app that calls an API directly"
+      ],
+      "resources": [
+        { "label": "3Blue1Brown — But what is a GPT?", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M" },
+        { "label": "Andrej Karpathy — Intro to LLMs", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g" }
+      ]
+    },
+    {
+      "id": "prompt-fundamentals",
+      "tier": "foundations",
+      "title": "Prompt Engineering Fundamentals",
+      "summary": "System vs user messages, role priming, instructions vs examples, why specificity wins.",
+      "prerequisites": ["llm-basics"],
+      "xp": 50,
+      "evidenceCriteria": [
+        "Wrote 5 prompts that produce reliably structured output",
+        "Can articulate why one prompt outperforms another with evidence"
+      ],
+      "resources": [
+        { "label": "Anthropic Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" }
+      ]
+    },
+    {
+      "id": "embeddings-vectors",
+      "tier": "foundations",
+      "title": "Embeddings & Vector Search",
+      "summary": "What an embedding is, why cosine similarity matters, how vector DBs power semantic search.",
+      "prerequisites": ["llm-basics"],
+      "xp": 60,
+      "evidenceCriteria": [
+        "Built a semantic search over a personal document set",
+        "Can explain when embeddings beat keyword search and when they don't"
+      ],
+      "resources": []
+    },
+    {
+      "id": "eval-hallucination",
+      "tier": "foundations",
+      "title": "Evaluation & Hallucination",
+      "summary": "How to tell if an LLM output is actually good. Eval sets, golden answers, why 'looks right' isn't right.",
+      "prerequisites": ["prompt-fundamentals"],
+      "xp": 60,
+      "evidenceCriteria": [
+        "Built an eval set of 20+ prompts for a real task",
+        "Can name three categories of hallucination and how to detect each"
+      ],
+      "resources": []
+    },
+    {
+      "id": "cost-latency",
+      "tier": "foundations",
+      "title": "Cost, Latency & Tradeoffs",
+      "summary": "Tokens cost money and time. Streaming, caching, batching, model size tradeoffs.",
+      "prerequisites": ["llm-basics"],
+      "xp": 40,
+      "evidenceCriteria": [
+        "Can ballpark the per-call cost of a given prompt + model",
+        "Reduced cost or latency of a real call by 50%+ with evidence"
+      ],
+      "resources": []
+    },
+    {
+      "id": "ai-ethics-privacy",
+      "tier": "foundations",
+      "title": "Ethics, Privacy & Data Handling",
+      "summary": "PII in prompts, data retention by provider, copyright grey zones, bias risks.",
+      "prerequisites": [],
+      "xp": 50,
+      "evidenceCriteria": [
+        "Can list which provider retains data and for how long",
+        "Drafted a one-page 'safe AI usage' guide for a team"
+      ],
+      "resources": []
+    },
+    {
+      "id": "ai-landscape",
+      "tier": "foundations",
+      "title": "The AI Landscape",
+      "summary": "Frontier labs (Anthropic, OpenAI, Google, Meta, xAI), open-weight models, the inference-provider layer, and where it's all heading.",
+      "prerequisites": [],
+      "xp": 30,
+      "evidenceCriteria": [
+        "Can name top 3 frontier models and their differentiators",
+        "Tracks 2+ AI newsletters / sources weekly"
+      ],
+      "resources": []
+    },
+    {
+      "id": "hands-on-assistant",
+      "tier": "foundations",
+      "title": "Hands-On: Build a Personal Assistant",
+      "summary": "Capstone for Tier 1. A working LLM-powered tool you actually use day to day.",
+      "prerequisites": ["prompt-fundamentals", "cost-latency", "ai-ethics-privacy"],
+      "xp": 100,
+      "evidenceCriteria": [
+        "A running app (CLI or web) that you use weekly",
+        "Code committed to a repo with a README",
+        "Wrote a short post-mortem: what worked, what didn't"
+      ],
+      "resources": []
+    },
+
+    {
+      "id": "advanced-prompting",
+      "tier": "practitioner",
+      "title": "Advanced Prompting Patterns",
+      "summary": "Chain-of-thought, few-shot, structured output (JSON mode), self-critique, prompt chaining.",
+      "prerequisites": ["prompt-fundamentals"],
+      "xp": 70,
+      "evidenceCriteria": [
+        "Used 3+ advanced patterns to solve real problems",
+        "Can explain when chain-of-thought helps vs hurts"
+      ],
+      "resources": []
+    },
+    {
+      "id": "rag-patterns",
+      "tier": "practitioner",
+      "title": "RAG Patterns",
+      "summary": "Retrieval-augmented generation: chunking strategies, hybrid search, reranking, context stuffing limits.",
+      "prerequisites": ["embeddings-vectors", "advanced-prompting"],
+      "xp": 90,
+      "evidenceCriteria": [
+        "Shipped a RAG app over a non-trivial corpus",
+        "Iterated on chunk size + retrieval strategy with measured impact"
+      ],
+      "resources": []
+    },
+    {
+      "id": "agents-tools",
+      "tier": "practitioner",
+      "title": "Agents & Tool Use",
+      "summary": "Function calling, tool loops, multi-step agents, when an agent is overkill vs essential.",
+      "prerequisites": ["advanced-prompting"],
+      "xp": 90,
+      "evidenceCriteria": [
+        "Built an agent that uses at least 3 tools to complete a task end-to-end",
+        "Can articulate the 'agent vs workflow' tradeoff"
+      ],
+      "resources": []
+    },
+    {
+      "id": "finetune-vs-prompt",
+      "tier": "practitioner",
+      "title": "Fine-Tuning vs Prompting",
+      "summary": "When fine-tuning is worth it, when it's a trap. LoRA, distillation, evals as the deciding factor.",
+      "prerequisites": ["eval-hallucination", "advanced-prompting"],
+      "xp": 70,
+      "evidenceCriteria": [
+        "Ran one fine-tuning experiment OR convincingly argued why not to",
+        "Can give the decision framework in under 5 minutes"
+      ],
+      "resources": []
+    },
+    {
+      "id": "model-selection",
+      "tier": "practitioner",
+      "title": "Choosing Models for Tasks",
+      "summary": "Big-model-for-hard-problem vs small-model-for-volume. Capability tiers, latency budgets, fallback chains.",
+      "prerequisites": ["cost-latency", "ai-landscape"],
+      "xp": 60,
+      "evidenceCriteria": [
+        "Documented a model-selection rubric used on a real project",
+        "Mixed 2+ models in a single product flow"
+      ],
+      "resources": []
+    },
+    {
+      "id": "local-models",
+      "tier": "practitioner",
+      "title": "Running Local Models",
+      "summary": "Ollama, llama.cpp, quantization, when local beats cloud (privacy, cost, latency, offline).",
+      "prerequisites": ["llm-basics"],
+      "xp": 50,
+      "evidenceCriteria": [
+        "Ran a 7B+ model locally and used it for a real task",
+        "Can articulate when local is the right call"
+      ],
+      "resources": []
+    },
+    {
+      "id": "prompt-versioning",
+      "tier": "practitioner",
+      "title": "Prompt Versioning & Testing",
+      "summary": "Prompts are code. Version them, diff them, test them on regression sets before shipping.",
+      "prerequisites": ["advanced-prompting", "eval-hallucination"],
+      "xp": 60,
+      "evidenceCriteria": [
+        "Set up a prompt-test pipeline (manual or automated) for one product",
+        "Caught a regression before users did"
+      ],
+      "resources": []
+    },
+    {
+      "id": "observability-logging",
+      "tier": "practitioner",
+      "title": "Observability & Logging",
+      "summary": "Trace every LLM call. Tools (Langfuse, Helicone, custom). What to log, what to redact.",
+      "prerequisites": ["eval-hallucination"],
+      "xp": 60,
+      "evidenceCriteria": [
+        "Instrumented one app so you can debug a bad output a week later",
+        "Built one dashboard tracking cost, latency, quality"
+      ],
+      "resources": []
+    },
+    {
+      "id": "safety-guardrails",
+      "tier": "practitioner",
+      "title": "Safety Guardrails",
+      "summary": "Prompt injection, output filtering, jailbreak resistance, sensitive-topic handling.",
+      "prerequisites": ["ai-ethics-privacy", "advanced-prompting"],
+      "xp": 70,
+      "evidenceCriteria": [
+        "Red-teamed your own app and patched 3+ findings",
+        "Can list the top 5 prompt-injection vectors"
+      ],
+      "resources": []
+    },
+    {
+      "id": "hands-on-internal-tool",
+      "tier": "practitioner",
+      "title": "Hands-On: Ship an Internal AI Tool",
+      "summary": "Capstone for Tier 2. A real tool deployed at work, used by at least one team that isn't yours.",
+      "prerequisites": ["rag-patterns", "agents-tools", "observability-logging"],
+      "xp": 200,
+      "evidenceCriteria": [
+        "Tool is in production with real users",
+        "Measured impact (hours saved, errors reduced, NPS)",
+        "Wrote a launch retro shared with stakeholders"
+      ],
+      "resources": []
+    },
+
+    {
+      "id": "identifying-use-cases",
+      "tier": "leader",
+      "title": "Identifying High-Value Use Cases",
+      "summary": "Where AI actually moves the needle. The 'expensive human judgment that repeats' lens. Killing bad ideas fast.",
+      "prerequisites": ["hands-on-internal-tool"],
+      "xp": 80,
+      "evidenceCriteria": [
+        "Generated 10+ candidate use cases for your org",
+        "Killed 7+ of them with reasoning before any code was written",
+        "Got one prioritized into a real backlog"
+      ],
+      "resources": []
+    },
+    {
+      "id": "discovery-workshop",
+      "tier": "leader",
+      "title": "Running an AI Discovery Workshop",
+      "summary": "Facilitating a session that surfaces real pain + real opportunity in 90 minutes. Templates, exercises, follow-ups.",
+      "prerequisites": ["identifying-use-cases"],
+      "xp": 90,
+      "evidenceCriteria": [
+        "Ran one workshop with 5+ stakeholders",
+        "Walked out with a prioritized opportunity list and exec sign-off"
+      ],
+      "resources": []
+    },
+    {
+      "id": "change-management",
+      "tier": "leader",
+      "title": "Change Management for AI Adoption",
+      "summary": "People don't fear AI; they fear losing relevance. Communication, training, opt-in vs mandate, dealing with skeptics.",
+      "prerequisites": ["discovery-workshop"],
+      "xp": 80,
+      "evidenceCriteria": [
+        "Brought one resistant team to active adoption",
+        "Documented the playbook you used"
+      ],
+      "resources": []
+    },
+    {
+      "id": "vendor-vs-build",
+      "tier": "leader",
+      "title": "Vendor vs Build Evaluation",
+      "summary": "When to buy (most of the time), when to build (rare, but real). RFP rubrics for AI vendors, hidden lock-in risks.",
+      "prerequisites": ["model-selection", "finetune-vs-prompt"],
+      "xp": 70,
+      "evidenceCriteria": [
+        "Ran a real vendor-vs-build decision with documented reasoning",
+        "Negotiated one AI vendor contract"
+      ],
+      "resources": []
+    },
+    {
+      "id": "data-readiness",
+      "tier": "leader",
+      "title": "Data Readiness Assessment",
+      "summary": "AI is only as good as the data. Auditing what you have, what's missing, what's compliant, what's poisoned.",
+      "prerequisites": ["rag-patterns", "ai-ethics-privacy"],
+      "xp": 80,
+      "evidenceCriteria": [
+        "Produced a data-readiness scorecard for one domain",
+        "Closed 2+ data gaps that unblocked a use case"
+      ],
+      "resources": []
+    },
+    {
+      "id": "upskilling-team",
+      "tier": "leader",
+      "title": "Upskilling Teammates",
+      "summary": "Lunch-and-learns, prompt libraries, pair-prompting, internal champions. Building org-wide capability.",
+      "prerequisites": ["advanced-prompting", "change-management"],
+      "xp": 80,
+      "evidenceCriteria": [
+        "Ran 3+ sessions with 10+ attendees each",
+        "Created a self-serve resource hub used after you stop pushing it",
+        "Identified and grew 2+ internal champions"
+      ],
+      "resources": []
+    },
+    {
+      "id": "pilot-to-production",
+      "tier": "leader",
+      "title": "Pilot → Production Playbook",
+      "summary": "Killing the demo-that-never-ships pattern. Acceptance criteria, ownership, rollback plans, sunset triggers.",
+      "prerequisites": ["hands-on-internal-tool", "observability-logging"],
+      "xp": 100,
+      "evidenceCriteria": [
+        "Took one AI pilot to production with documented playbook",
+        "Killed one that didn't deserve to ship"
+      ],
+      "resources": []
+    },
+    {
+      "id": "measuring-roi",
+      "tier": "leader",
+      "title": "Measuring AI ROI",
+      "summary": "Beyond 'feels useful'. Time saved, errors avoided, deflection rate, revenue lift. Honest before/after.",
+      "prerequisites": ["identifying-use-cases"],
+      "xp": 80,
+      "evidenceCriteria": [
+        "Published one ROI case study with real numbers",
+        "Defended it under skeptical questioning"
+      ],
+      "resources": []
+    },
+    {
+      "id": "policy-governance",
+      "tier": "leader",
+      "title": "Policy & Governance",
+      "summary": "Acceptable-use policy, approval workflows, data classification, vendor review, regulator-readiness.",
+      "prerequisites": ["safety-guardrails", "ai-ethics-privacy"],
+      "xp": 90,
+      "evidenceCriteria": [
+        "Drafted or substantially improved an org-wide AI policy",
+        "Got it adopted by legal/security/leadership"
+      ],
+      "resources": []
+    },
+    {
+      "id": "hands-on-team-adoption",
+      "tier": "leader",
+      "title": "Hands-On: Lead a Team's AI Adoption",
+      "summary": "Capstone for Tier 3. Pick a team, take them from zero to capable, document everything.",
+      "prerequisites": ["change-management", "pilot-to-production", "measuring-roi"],
+      "xp": 300,
+      "evidenceCriteria": [
+        "A team is meaningfully more productive with AI because of your work",
+        "ROI documented and shared",
+        "Adoption sustains 3+ months after you step back"
+      ],
+      "resources": []
+    },
+
+    {
+      "id": "ai-strategy-roadmap",
+      "tier": "cto",
+      "title": "AI Strategy & Roadmap",
+      "summary": "Where AI fits in the 1, 3, 5-year vision. Differentiation vs hygiene. Bets, not initiatives.",
+      "prerequisites": ["hands-on-team-adoption"],
+      "xp": 150,
+      "evidenceCriteria": [
+        "Authored an AI strategy doc that survived exec critique",
+        "Translated it into a quarterly roadmap with owners"
+      ],
+      "resources": []
+    },
+    {
+      "id": "org-design",
+      "tier": "cto",
+      "title": "Org Design for AI",
+      "summary": "Centralized AI team vs embedded vs platform-plus-embedded. Hiring profiles. Where the model lives in the org chart.",
+      "prerequisites": ["upskilling-team", "hands-on-team-adoption"],
+      "xp": 120,
+      "evidenceCriteria": [
+        "Proposed an org structure with rationale to leadership",
+        "Made one structural change that improved AI velocity"
+      ],
+      "resources": []
+    },
+    {
+      "id": "build-buy-partner",
+      "tier": "cto",
+      "title": "Build / Buy / Partner at Scale",
+      "summary": "Same question as Tier 3 but with capex, multi-year contracts, and strategic partnerships in play.",
+      "prerequisites": ["vendor-vs-build", "ai-strategy-roadmap"],
+      "xp": 120,
+      "evidenceCriteria": [
+        "Owned one strategic AI partnership decision",
+        "Defended a 'build' or 'buy' call to the board with evidence"
+      ],
+      "resources": []
+    },
+    {
+      "id": "platform-thinking",
+      "tier": "cto",
+      "title": "AI Platform Thinking",
+      "summary": "Shared infra so every team doesn't rebuild the wheel: model registry, eval harness, prompt library, observability, gateways.",
+      "prerequisites": ["pilot-to-production", "observability-logging"],
+      "xp": 150,
+      "evidenceCriteria": [
+        "Stood up one shared AI platform capability used by 3+ teams",
+        "Measured platform leverage (time-to-launch reduction)"
+      ],
+      "resources": []
+    },
+    {
+      "id": "risk-compliance-leadership",
+      "tier": "cto",
+      "title": "Risk & Compliance Leadership",
+      "summary": "Owning AI risk at the exec level. EU AI Act, SOC2 mappings, model audit trails, board reporting.",
+      "prerequisites": ["policy-governance"],
+      "xp": 130,
+      "evidenceCriteria": [
+        "Passed an external audit or assessment of AI controls",
+        "Briefed board or audit committee on AI risk posture"
+      ],
+      "resources": []
+    },
+    {
+      "id": "ai-budgeting",
+      "tier": "cto",
+      "title": "AI Budgeting & Spend",
+      "summary": "Forecasting token spend at scale, capacity planning, chargeback models, the 'AI is free until it isn't' trap.",
+      "prerequisites": ["measuring-roi", "build-buy-partner"],
+      "xp": 110,
+      "evidenceCriteria": [
+        "Owned an AI budget line with quarterly forecasts",
+        "Came in within 10% two quarters running"
+      ],
+      "resources": []
+    },
+    {
+      "id": "board-communication",
+      "tier": "cto",
+      "title": "Board-Level Communication",
+      "summary": "Explaining AI to non-technical leaders. Risk + opportunity narrative. Saying 'I don't know' productively.",
+      "prerequisites": ["ai-strategy-roadmap"],
+      "xp": 110,
+      "evidenceCriteria": [
+        "Delivered 2+ board updates on AI with clear asks",
+        "Changed a board decision with your input"
+      ],
+      "resources": []
+    },
+    {
+      "id": "talent-acquisition",
+      "tier": "cto",
+      "title": "Talent Acquisition & Retention",
+      "summary": "Who you actually need (ML engineers vs prompt engineers vs product), how to attract them, how to keep them.",
+      "prerequisites": ["org-design"],
+      "xp": 110,
+      "evidenceCriteria": [
+        "Hired or grew 2+ AI roles",
+        "Retention story: kept a key AI person you were at risk of losing"
+      ],
+      "resources": []
+    },
+    {
+      "id": "cross-functional-alignment",
+      "tier": "cto",
+      "title": "Cross-Functional Alignment",
+      "summary": "Legal, security, product, sales, marketing all have stakes in AI. Running the room.",
+      "prerequisites": ["change-management", "ai-strategy-roadmap"],
+      "xp": 100,
+      "evidenceCriteria": [
+        "Led one initiative that required active buy-in from 4+ functions",
+        "Resolved a hard cross-functional conflict over AI direction"
+      ],
+      "resources": []
+    },
+    {
+      "id": "hands-on-company-strategy",
+      "tier": "cto",
+      "title": "Hands-On: Company-Wide AI Strategy",
+      "summary": "Final capstone. A written strategy adopted by your org (or one you've consulted for) — the artifact you'd put in front of a CTO-search hiring panel.",
+      "prerequisites": ["ai-strategy-roadmap", "ai-budgeting", "board-communication", "platform-thinking"],
+      "xp": 500,
+      "evidenceCriteria": [
+        "Written strategy adopted at the executive level",
+        "Funded with budget and owners",
+        "Delivered first milestone on schedule"
+      ],
+      "resources": []
+    }
+  ]
+}
