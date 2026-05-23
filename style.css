@@ -361,6 +361,48 @@ input, textarea { font-family: inherit; }
 .panel-why .panel-section-title { margin-bottom: 4px; }
 .panel-why-body { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text); }
 .resource-no-url { color: var(--text-dim); font-size: 13px; }
+
+.panel-first-step {
+  margin-top: 4px;
+  padding: 10px 12px;
+  background: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-left: 3px solid var(--gold);
+  border-radius: 8px;
+}
+.panel-first-step .panel-section-title { color: var(--gold); margin-bottom: 4px; }
+.panel-first-step-body { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text); }
+
+.concept-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.concept-chip {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--bg-3);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text);
+  font-family: var(--mono);
+}
+
+.pitfalls { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.pitfalls li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px 10px;
+  background: rgba(248, 113, 113, 0.06);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+.pitfalls li::before {
+  content: "⚠";
+  color: var(--red);
+  flex-shrink: 0;
+  font-size: 13px;
+}
 .panel-section-title {
   color: var(--text-dim);
   font-size: 11px;

@@ -35,9 +35,18 @@ Return **only** the JSON object. No prose, no markdown fences.
   "tier": "{{tierId}}",
   "title": "...",
   "summary": "...",
+  "whyItMatters": "...",
+  "firstStep": "Specific action the reader can take today.",
   "prerequisites": ["..."],
   "xp": 60,
   "evidenceCriteria": ["...", "..."],
-  "resources": [{ "label": "...", "url": "https://..." }]
+  "keyConcepts": ["term 1", "term 2", "term 3"],
+  "commonPitfalls": ["specific failure mode 1", "specific failure mode 2"],
+  "resources": [
+    { "label": "...", "url": "https://..." },
+    { "label": "Resource with no URL — only when you'd otherwise be guessing" }
+  ]
 }
 ```
+
+Only include a URL when you are confident it exists. Otherwise use label-only entries.

@@ -47,18 +47,27 @@ Return **only** a JSON array of node objects matching this schema. No prose, no 
     "tier": "{{tierId}}",
     "title": "Short title (under 40 chars)",
     "summary": "One-sentence description, plain English, no jargon.",
+    "whyItMatters": "One sentence connecting this skill to the AI SPOC → CTO journey. Should sting, not flatter.",
+    "firstStep": "One concrete action the reader can take today to start. Specific verb + specific artifact.",
     "prerequisites": ["existing-node-id-1", "existing-node-id-2"],
     "xp": 60,
     "evidenceCriteria": [
-      "Observable behavior 1",
+      "Observable behavior 1 (specific, falsifiable)",
       "Observable behavior 2",
       "Observable behavior 3"
     ],
+    "keyConcepts": ["term 1", "term 2", "term 3"],
+    "commonPitfalls": [
+      "Specific failure mode 1",
+      "Specific failure mode 2"
+    ],
     "resources": [
-      { "label": "Resource name", "url": "https://..." }
+      { "label": "Resource name", "url": "https://..." },
+      { "label": "Resource with no URL (only when you'd otherwise be guessing)" }
     ]
   }
 ]
 ```
 
 XP guidance: 30–60 for quick concepts, 70–100 for substantial skills, 150+ for capstone-level work.
+Only include a URL when you are confident it exists — never fabricate. Use label-only entries otherwise.

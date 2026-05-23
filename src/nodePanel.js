@@ -70,6 +70,20 @@ export function createNodePanel({ root, skills, store, computeStatus, onChange, 
       root.appendChild(why);
     }
 
+    if (node.firstStep) {
+      const first = document.createElement("div");
+      first.className = "panel-first-step";
+      const label = document.createElement("div");
+      label.className = "panel-section-title";
+      label.textContent = "Start here today";
+      const body = document.createElement("p");
+      body.className = "panel-first-step-body";
+      body.textContent = node.firstStep;
+      first.appendChild(label);
+      first.appendChild(body);
+      root.appendChild(first);
+    }
+
     // Prerequisites
     if (node.prerequisites && node.prerequisites.length) {
       const prereqSection = section("Prerequisites");
@@ -102,6 +116,35 @@ export function createNodePanel({ root, skills, store, computeStatus, onChange, 
       for (const c of node.evidenceCriteria) {
         const li = document.createElement("li");
         li.textContent = c;
+        ul.appendChild(li);
+      }
+      sec.appendChild(ul);
+      root.appendChild(sec);
+    }
+
+    // Key concepts
+    if (node.keyConcepts && node.keyConcepts.length) {
+      const sec = section("Key concepts to define");
+      const chips = document.createElement("div");
+      chips.className = "concept-chips";
+      for (const c of node.keyConcepts) {
+        const chip = document.createElement("span");
+        chip.className = "concept-chip";
+        chip.textContent = c;
+        chips.appendChild(chip);
+      }
+      sec.appendChild(chips);
+      root.appendChild(sec);
+    }
+
+    // Common pitfalls
+    if (node.commonPitfalls && node.commonPitfalls.length) {
+      const sec = section("Watch out for");
+      const ul = document.createElement("ul");
+      ul.className = "pitfalls";
+      for (const p of node.commonPitfalls) {
+        const li = document.createElement("li");
+        li.textContent = p;
         ul.appendChild(li);
       }
       sec.appendChild(ul);
