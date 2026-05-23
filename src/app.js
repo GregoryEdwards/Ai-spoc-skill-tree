@@ -52,6 +52,9 @@ async function main() {
   nameInput.value = store.state.profile.name;
   nameInput.addEventListener("input", (e) => store.setProfileName(e.target.value));
 
+  const streakChip = document.getElementById("streak-chip");
+  const streakDaysEl = document.getElementById("streak-days");
+
   function renderHeader() {
     const { totalXP: xp, level } = store.state.profile;
     const { intoLevel, span, percent } = progressWithinLevel(xp);
@@ -59,6 +62,9 @@ async function main() {
     xpText.textContent = `${intoLevel} / ${span} XP`;
     totalXP.textContent = `${xp.toLocaleString()} XP total`;
     levelBadge.textContent = `Lv ${level}`;
+    const streak = store.effectiveStreak();
+    streakDaysEl.textContent = String(streak);
+    streakChip.classList.toggle("alive", streak > 0);
   }
 
   // Tree
@@ -112,6 +118,11 @@ async function main() {
   document.getElementById("btn-zoom-in").addEventListener("click", () => tree.zoomIn());
   document.getElementById("btn-zoom-out").addEventListener("click", () => tree.zoomOut());
   document.getElementById("btn-fit").addEventListener("click", () => tree.fit());
+
+  const searchInput = document.getElementById("tree-search");
+  const filterSelect = document.getElementById("tree-filter");
+  searchInput.addEventListener("input", (e) => tree.setSearch(e.target.value.trim()));
+  filterSelect.addEventListener("change", (e) => tree.setStatusFilter(e.target.value));
 
   // Save management
   document.getElementById("btn-export").addEventListener("click", () => {

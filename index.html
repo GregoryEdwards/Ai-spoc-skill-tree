@@ -30,6 +30,10 @@
             <div class="xp-fill" id="xp-fill"></div>
             <span class="xp-text" id="xp-text">0 / 100 XP</span>
           </div>
+          <span class="streak-chip" id="streak-chip" title="Consecutive days with activity">
+            <span class="streak-icon">▲</span>
+            <span id="streak-days">0</span>-day streak
+          </span>
           <span class="total-xp" id="total-xp">0 XP total</span>
         </div>
       </div>
@@ -43,6 +47,14 @@
           <button class="btn ghost" id="btn-zoom-in" title="Zoom in">+</button>
           <button class="btn ghost" id="btn-zoom-out" title="Zoom out">−</button>
           <button class="btn ghost" id="btn-fit" title="Fit to screen">Fit</button>
+          <input id="tree-search" class="tree-search" type="search" placeholder="Search skills…" />
+          <select id="tree-filter" class="tree-filter" title="Filter by status">
+            <option value="all">All statuses</option>
+            <option value="unlocked">Unlocked</option>
+            <option value="in-progress">In progress</option>
+            <option value="mastered">Mastered</option>
+            <option value="locked">Locked</option>
+          </select>
           <span class="legend">
             <span class="dot locked"></span>locked
             <span class="dot unlocked"></span>unlocked

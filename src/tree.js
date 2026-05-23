@@ -16,8 +16,20 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
   let layout = null;
   let viewport = { x: 0, y: 0, scale: 1 };
   let selectedId = null;
+  let searchQuery = "";
+  let statusFilter = "all";
 
   function statusOf(nodeId) { return getStatus(nodeId); }
+
+  function matchesFilter(node) {
+    if (statusFilter !== "all" && statusOf(node.id) !== statusFilter) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      const hay = `${node.title} ${node.summary ?? ""} ${node.whyItMatters ?? ""}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  }
 
   function computeLayout() {
     const tiers = [...skills.tiers].sort((a, b) => a.order - b.order);
@@ -83,9 +95,16 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
     const root = el("g", { id: "tree-root" });
     svg.appendChild(root);
 
-    // tier headers + dividers
+    // tier headers + dividers + per-tier progress counters
     for (const tier of layout.tiers) {
       const y = layout.tierY.get(tier.id);
+      const tierNodes = layout.nodesByTier.get(tier.id) ?? [];
+      const total = tierNodes.length;
+      const totalXP = tierNodes.reduce((s, n) => s + (n.xp || 0), 0);
+      const mastered = tierNodes.filter((n) => statusOf(n.id) === "mastered");
+      const masteredXP = mastered.reduce((s, n) => s + (n.xp || 0), 0);
+      const pct = total ? Math.round((mastered.length / total) * 100) : 0;
+
       root.appendChild(
         el("text", {
           x: PADDING_X,
@@ -93,20 +112,47 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
           class: "tier-label"
         }, [document.createTextNode(`${tier.name.toUpperCase()} — ${tier.subtitle.toUpperCase()}`)])
       );
+
+      // progress counter at right
+      const counterText = `${mastered.length}/${total} MASTERED · ${masteredXP}/${totalXP} XP`;
       root.appendChild(
-        el("line", {
-          x1: PADDING_X,
-          y1: y - 10,
-          x2: layout.canvasWidth - PADDING_X,
-          y2: y - 10,
-          class: "tier-divider"
+        el("text", {
+          x: layout.canvasWidth - PADDING_X,
+          y: y - 20,
+          class: "tier-counter",
+          "text-anchor": "end"
+        }, [document.createTextNode(counterText)])
+      );
+
+      // progress bar background
+      const barX = PADDING_X;
+      const barY = y - 12;
+      const barW = layout.canvasWidth - PADDING_X * 2;
+      const barH = 3;
+      root.appendChild(
+        el("rect", {
+          x: barX, y: barY, width: barW, height: barH,
+          class: "tier-bar-bg", rx: 1.5, ry: 1.5
         })
       );
+      if (pct > 0) {
+        root.appendChild(
+          el("rect", {
+            x: barX, y: barY, width: barW * (pct / 100), height: barH,
+            class: `tier-bar-fill tier-bar-fill-${tier.id}`, rx: 1.5, ry: 1.5
+          })
+        );
+      }
     }
 
     // edges first so they sit behind nodes
     const edgesGroup = el("g", { class: "edges" });
     root.appendChild(edgesGroup);
+    const filterActive = statusFilter !== "all" || searchQuery !== "";
+    const visibleIds = new Set(
+      filterActive ? skills.nodes.filter(matchesFilter).map((n) => n.id) : skills.nodes.map((n) => n.id)
+    );
+
     for (const node of skills.nodes) {
       const toPos = layout.positions.get(node.id);
       if (!toPos) continue;
@@ -124,6 +170,7 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
         let cls = "edge";
         if (fromStatus === "mastered") cls += " mastered";
         if (toStatus === "in-progress" || toStatus === "unlocked") cls += " active";
+        if (filterActive && !(visibleIds.has(node.id) && visibleIds.has(prereqId))) cls += " filtered-out";
         edgesGroup.appendChild(el("path", { d, class: cls, "data-from": prereqId, "data-to": node.id }));
       }
     }
@@ -136,10 +183,11 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
       if (!pos) continue;
       const status = statusOf(node.id);
       const tier = layout.tiers.find((t) => t.id === node.tier);
+      const isFiltered = filterActive && !visibleIds.has(node.id);
       const group = el(
         "g",
         {
-          class: `node ${status}${selectedId === node.id ? " selected" : ""}`,
+          class: `node ${status}${selectedId === node.id ? " selected" : ""}${isFiltered ? " filtered-out" : ""}`,
           transform: `translate(${pos.x}, ${pos.y})`,
           "data-id": node.id,
           "data-tier": node.tier
@@ -242,6 +290,8 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus 
     fit,
     zoomIn: () => zoom(1.2),
     zoomOut: () => zoom(0.8),
-    setSelected(id) { selectedId = id; render(); }
+    setSelected(id) { selectedId = id; render(); },
+    setSearch(q) { searchQuery = q ?? ""; render(); },
+    setStatusFilter(s) { statusFilter = s ?? "all"; render(); }
   };
 }
