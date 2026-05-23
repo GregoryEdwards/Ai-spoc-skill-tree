@@ -41,6 +41,49 @@ export function createTreeRenderer({ svg, skills, store, onNodeClick, getStatus,
       if (list) list.push(n);
     }
 
+    // Barycenter heuristic: reorder nodes within each tier so edges from
+    // prerequisites (top-down pass) and children (bottom-up pass) cross
+    // less. Classic Sugiyama crossing reduction, four sweeps. Stable
+    // because we tiebreak on each node's previous index.
+    const childMap = new Map();
+    for (const n of skills.nodes) {
+      for (const p of n.prerequisites ?? []) {
+        if (!childMap.has(p)) childMap.set(p, []);
+        childMap.get(p).push(n.id);
+      }
+    }
+    function tierIndex(nodeId) {
+      const node = skills.nodes.find((x) => x.id === nodeId);
+      if (!node) return -1;
+      const list = nodesByTier.get(node.tier);
+      return list ? list.findIndex((x) => x.id === nodeId) : -1;
+    }
+    function meanOf(ids) {
+      const idxs = ids.map(tierIndex).filter((i) => i >= 0);
+      if (!idxs.length) return null;
+      return idxs.reduce((a, b) => a + b, 0) / idxs.length;
+    }
+    function reorder(tierId, neighborsOf) {
+      const list = nodesByTier.get(tierId);
+      const scored = list.map((n, i) => ({
+        n,
+        prev: i,
+        score: meanOf(neighborsOf(n)) ?? i
+      }));
+      scored.sort((a, b) => (a.score - b.score) || (a.prev - b.prev));
+      nodesByTier.set(tierId, scored.map((s) => s.n));
+    }
+    for (let pass = 0; pass < 4; pass++) {
+      // top-down: align by parents
+      for (let i = 1; i < tiers.length; i++) {
+        reorder(tiers[i].id, (n) => n.prerequisites ?? []);
+      }
+      // bottom-up: align by children
+      for (let i = tiers.length - 2; i >= 0; i--) {
+        reorder(tiers[i].id, (n) => childMap.get(n.id) ?? []);
+      }
+    }
+
     const positions = new Map();
     let maxRowWidth = 0;
     const tierY = new Map();
